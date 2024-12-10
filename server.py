@@ -1,54 +1,63 @@
 import socket
-import time
+from threading import Thread
+import json
 
-main_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# main_socket - главный порт(соккет) сервера сюда приёмы подключений, AF_INET - тип адреса, socket.SOCK_STREAM - тип адресов (4 цыфры), используется TCP протокол, который лучше UDP
-main_socket.setsockopt(socket.IPPROTO_IP, socket.TCP_NODELAY, 1)
-# Алгоритм нейгла - упаковка данных в пакетыи редко отправляет, это чтобы такого не было
-main_socket.bind(('localhost', 10000))
-# Связка с портом компьютера первые 1024 зарезервированны
-main_socket.setblocking(0)
-# Не нужно ждать сообщение от прота компьютера
-main_socket.listen(5)
-print('Создался новый соккет')
-# Количество человек для подключения к главному порту
-player_sockets = []
-# список сокетов игроков
-while True:
-    try:
-        new_socket, addr = main_socket.accept()
-        #есть ли желающие войти в игру, new_socket = новый соккет игрока, addr = адрес игрока, направление игрока на сервер
-        print('Подключился', addr)
-        new_socket.setblocking(0)
-        player_sockets.append(new_socket)
-    except:
-        print('Нет тех кто хочет играть')
-        # если нет подключений
-        pass
-    # считываем команды игроков
-    for sock in player_sockets:
-        try:
-            data_sock = sock.recv(1024)
-            # прочитать данные соккета что в него пришло
-            data = data_sock.decode()
-            print('Получил', data)
-        except:
-            # если ничего не пришло
-            pass
-    # обработка данных
-    # обработка состояний
-    for sock in player_sockets:
-        try:
-            sock.send('Новое состояние игры'.encode())
-            # Отправляем закодированные данные
-        except:
-            player_sockets.remove(sock)
-            #если игрок отвалился
-            sock.close()
-            print('Отключился игрок')
-    time.sleep(1)
+HOST, PORT = 'localhost', 12000  # Адрес сервера
+MAX_PLAYERS = 2  # Максимальное кол-во подключений
+
 
 class Server:
-    def __init__(self):
-        pass
-    # организовать сервер в виде класса
+
+    def __init__(self, addr, max_conn):
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock.bind(addr)
+        self.players = []
+
+        self.sock.listen(max_conn)
+        self.listen()  # вызываем цикл, который отслеживает подключения к серверу
+
+    def listen(self):
+        while True:
+            try:
+                if not len(self.players) >= MAX_PLAYERS:
+                    conn, addr = self.sock.accept()
+                    print("New connection", addr)
+                    Thread(target=self.handle_client,
+                           args=(conn,)).start()
+            except:
+                pass
+
+    def handle_client(self, conn):
+        self.player = {
+            "id": len(self.players) + 1,
+            "x": 400,
+            "y": 300
+        }
+        self.players.append(self.player)
+        while True:
+            try:
+                data = conn.recv(1024)
+                if not data:
+                    print("Disconnect")
+                    break
+                data = json.loads(data.decode('utf-8'))
+                if data["request"] == "get_all":
+                    conn.sendall(bytes(json.dumps({"response": self.players}), 'UTF-8'))
+
+                if data["request"] == "move":
+                    if data["move"] == "left":
+                        self.player["x"] -= 10
+                    if data["move"] == "right":
+                        self.player["x"] += 10
+                    if data["move"] == "up":
+                        self.player["y"] -= 10
+                    if data["move"] == "down":
+                        self.player["y"] += 10
+            except Exception as e:
+                print(e)
+                break
+        self.players.remove(self.player)
+
+
+if __name__ == "__main__":
+    server = Server((HOST, PORT), MAX_PLAYERS)
