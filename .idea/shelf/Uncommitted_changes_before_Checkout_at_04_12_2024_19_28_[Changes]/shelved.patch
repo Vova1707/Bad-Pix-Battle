@@ -1,0 +1,18 @@
+Index: Main_menu.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>def main():\r\n    print('Bed Pix Battle Control')\r\n\r\n\r\nif __name__ == '__main__':\r\n    main()
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Main_menu.py b/Main_menu.py
+--- a/Main_menu.py	
++++ b/Main_menu.py	
+@@ -1,6 +1,0 @@
+-def main():
+-    print('Bed Pix Battle Control')
+-
+-
+-if __name__ == '__main__':
+-    main()
+\ No newline at end of file
