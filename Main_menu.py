@@ -21,25 +21,55 @@ class Bad_Pix_Battle:
         """
         Отвечает за прорисовку меню
         """
-        arrow = pygame.image.load('Images/Main_menu/Arrow.png')
-        arrow_pos = [(400, 400 + x * 50) for x in range(5)]
+        arrow_right = pygame.image.load('Images/Main_menu/arrow_right.png')
+        arrow_left = pygame.image.load('Images/Main_menu/arrow_left.png')
+        arrow_pos_left = [(125, 275 + i * 300) for i in range(4)]
+        arrow_pos_right = [(825, 275 + i * 300) for i in range(4)]
         i_a = 0
         menu_surface = pygame.image.load('Images/Main_menu/Menu.png')
         while self.RUN:
             for e in pygame.event.get():
-                    if e.key == pygame.K_DOWN:
-                        i_a += 1
-                        if i_a >= len(arrow_pos):
-                            i_a = 0
-                        pygame.time.delay(30)
-                    if e.key == pygame.K_UP:
-                        i_a -= 1
-                        if i_a < 0:
-                            i_a = len(arrow_pos) - 1
-                        pygame.time.delay(30)
+                if e.key == pygame.K_DOWN:
+                    i_a += 1
+                    if i_a >= 3:
+                        i_a = 0
+                    pygame.time.delay(30)
+                if e.key == pygame.K_UP:
+                    i_a -= 1
+                    if i_a < 0:
+                        i_a = 3
+                    pygame.time.delay(30)
+
+                elif e.type == pygame.KEYDOWN:
+                    if e.key == pygame.K_ESCAPE:
+                        donne = False
+                    elif e.key == pygame.K_RETURN:
+                        if i_a == 0:
+                            # Окно сообщений
+                            self.show_message_frame = not self.show_message_frame
+                        elif i_a == 1:
+                            # Свечение
+                            self.show_glow = not self.show_glow
+                        elif i_a == 2:
+                            # Сохранить
+                            com = self.save()
+                            if com != 'OK':
+                                return com
+                        elif i_a == 3:
+                            # Загрузить
+                            return 'LOAD'
+                        elif i_a == 4:
+                            # Титры
+                            pass
+                        elif i_a == 5:
+                            # Выход
+                            self.RUN = False
+                            return 'QUIT'
+
             self.screen.fill((0, 0, 0))
             self.screen.blit(menu_surface, (0, 0))
-            self.screen.blit(arrow, arrow_pos[i_a])
+            self.screen.blit(arrow_right, arrow_pos_right[i_a])
+            self.screen.blit(arrow_left, arrow_pos_left[i_a])
             pygame.display.flip()
 
     def view_logo(self):
