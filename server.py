@@ -2,8 +2,8 @@ import socket
 from threading import Thread
 import json
 
-HOST, PORT = 'localhost', 12000  # Адрес сервера
-MAX_PLAYERS = 2  # Максимальное кол-во подключений
+HOST, PORT = 'localhost', 12200  # Адрес сервера
+MAX_PLAYERS = 5  # Максимальное кол-во подключений
 
 
 class Server:
@@ -12,9 +12,8 @@ class Server:
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.bind(addr)
         self.players = []
-
         self.sock.listen(max_conn)
-        self.listen()  # вызываем цикл, который отслеживает подключения к серверу
+        self.listen()
 
     def listen(self):
         while True:
@@ -41,9 +40,9 @@ class Server:
                     print("Disconnect")
                     break
                 data = json.loads(data.decode('utf-8'))
+
                 if data["request"] == "get_all":
                     conn.sendall(bytes(json.dumps({"response": self.players}), 'UTF-8'))
-
                 if data["request"] == "move":
                     if data["move"] == "left":
                         self.player["x"] -= 10
@@ -58,6 +57,8 @@ class Server:
                 break
         self.players.remove(self.player)
 
+    def get_all(self, conn):
+        pass
 
 if __name__ == "__main__":
     server = Server((HOST, PORT), MAX_PLAYERS)
