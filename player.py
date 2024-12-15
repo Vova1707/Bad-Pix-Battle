@@ -5,5 +5,5 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.image.load("player.png").convert_alpha()
         self.rect = self.image.get_rect(center=pos)
 
-    def runnind(self):
+    def running(self):
         pass
