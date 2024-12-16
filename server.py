@@ -3,7 +3,7 @@ from threading import Thread
 import json
 
 HOST, PORT = 'localhost', 12200  # Адрес сервера
-MAX_PLAYERS = 5  # Максимальное кол-во подключений
+MAX_PLAYERS = 4  # Максимальное кол-во подключений
 
 
 class Server:

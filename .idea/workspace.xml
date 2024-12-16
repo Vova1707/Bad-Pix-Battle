@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8ba5288-f801-41b4-9c3f-a0742cfe7338" name="Changes" comment="add arhitectory and menu and registration menu" />
+    <list default="true" id="e8ba5288-f801-41b4-9c3f-a0742cfe7338" name="Changes" comment="add arhitectory and menu and registration menu">
+      <change beforePath="$PROJECT_DIR$/.idea/Bad Pix Battle.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Bad Pix Battle.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main_Window.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_Window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/databases/users.db" beforeDir="false" afterPath="$PROJECT_DIR$/databases/users.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
