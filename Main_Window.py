@@ -1,5 +1,7 @@
 import pygame
 import numpy as np
+from pygame import K_DOWN, K_LEFT, K_RIGHT
+
 from player import Player
 from client import Client
 import sqlite3
@@ -26,7 +28,7 @@ class Main_Window:
         self.user = None
         self.create_table()
 
-        self.view_logo()
+        #self.view_logo()
         self.listen_all()
 
     def create_table(self):
@@ -64,11 +66,22 @@ class Main_Window:
             return False
 
     def listen_all(self):
-        self.active_surface = 'registration'
+        self.active_surface = 'menu'
         self.options_window_widget = np.array([])
         self.update_window = True
+
+        self.down = False
+        self.up = False
+        self.right = False
+
         while self.RUN:
             events = pygame.event.get()
+            self.key = pygame.key.get_pressed()
+            if self.key[K_RIGHT] and self.active_surface == 'game':
+                self.client.move("right")
+                pygame_widgets.update(events)
+                pygame.display.update()
+
             for event in events:
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -82,7 +95,7 @@ class Main_Window:
                     self.registration()
             pygame_widgets.update(events)
             pygame.display.update()
-            self.clock.tick(60)
+            self.clock.tick(30)
 
     def game_online(self, event):
         if self.update_window:
@@ -103,18 +116,16 @@ class Main_Window:
             self.options_window_widget = np.append(self.options_window_widget, [button])
             self.client = Client((HOST, PORT))
             self.update_window = False
-
-
         if event.type == pygame.KEYDOWN:
-            if event.key == ord('a'):
+            if event.key == pygame.K_LEFT:
                 self.client.move("left")
-                print('a')
-            if event.key == ord('d'):
+            if event.key == pygame.K_RIGHT:
                 self.client.move("right")
-            if event.key == ord('w'):
-                self.client.move("up")
-            if event.key == ord('s'):
+            if event.key == pygame.K_DOWN:
                 self.client.move("down")
+            if event.key == pygame.K_UP:
+                self.client.move("up")
+
         self.screen.fill((255, 255, 255))
         for i in self.client.players:
             player = Player((i["x"], i["y"]))
