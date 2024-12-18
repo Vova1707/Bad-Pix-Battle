@@ -8,13 +8,17 @@ class Client:
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.connect(addr)
         self.players = []
-        Thread(target=self.get_players).start()
+        self.stop = 0
+        Thread(target=self.get_all).start()
 
-    def get_players(self):
+    def get_all(self):
         while True:
             self.sock.sendall(bytes(json.dumps({"request": "get_all"}), 'UTF-8'))
             received = json.loads(self.sock.recv(1024).decode('UTF-8'))
             self.players = received["response"]
+            if self.stop:
+                break
+        self.sock.close()
 
     def move(self, side):
         self.sock.sendall(bytes(json.dumps({"request": "move", "move": side}), 'UTF-8'))

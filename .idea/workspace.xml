@@ -5,11 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8ba5288-f801-41b4-9c3f-a0742cfe7338" name="Changes" comment="add arhitectory and menu and registration menu">
+      <change afterPath="$PROJECT_DIR$/Images/Main_menu/main_menu.JPEG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Images/Players/player_1/player_1_0.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Images/Players/player_2/player_2_1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Images/Players/player_3/player_3_1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Images/Players/player_4/player_4_1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Images/Settings/cursor.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/databases.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game_online.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game_over.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game_win.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/registration.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/Bad Pix Battle.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Bad Pix Battle.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main_Window.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main_Window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main_Window.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/databases/users.db" beforeDir="false" afterPath="$PROJECT_DIR$/databases/users.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/player.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/player.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,11 +64,13 @@
     &quot;Python.Main_menu123.executor&quot;: &quot;Run&quot;,
     &quot;Python.Menu.executor&quot;: &quot;Run&quot;,
     &quot;Python.client.executor&quot;: &quot;Run&quot;,
+    &quot;Python.game_online.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main_window (1).executor&quot;: &quot;Run&quot;,
     &quot;Python.player.executor&quot;: &quot;Run&quot;,
     &quot;Python.server.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;feature__project/Kondrahin__server&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/konde/PycharmProjects/RPG_game_test&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/konde/PycharmProjects/Bad Pix Battle&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
@@ -62,55 +79,14 @@
       <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\databases" />
-      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle" />
+      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Settings" />
+      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Players\player_4" />
+      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Players\player_3" />
+      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Players\player_2" />
+      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Players\player_1" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Main_Window (1)">
-    <configuration name="Main_Window (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Bad Pix Battle" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Main_Window.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Main_Window" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Bad Pix Battle" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\konde\PycharmProjects\Bad Pix Battle\Main_Window.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.server">
     <configuration name="Main_menu123" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Bad Pix Battle" />
       <option name="ENV_FILES" value="" />
@@ -133,7 +109,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Menu" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="main_window (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Bad Pix Battle" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -146,7 +122,73 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Menu.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main_window.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main_window" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Bad Pix Battle" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="C:\Users\konde\PycharmProjects\Bad Pix Battle\main_window.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main_window" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Bad Pix Battle" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="C:\Users\konde\PycharmProjects\Bad Pix Battle\main_window.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="menu" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Bad Pix Battle" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="C:\Users\konde\PycharmProjects\Bad Pix Battle\menu.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -179,11 +221,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Main_Window (1)" />
+        <item itemvalue="Python.main_window (1)" />
         <item itemvalue="Python.server" />
-        <item itemvalue="Python.Menu" />
-        <item itemvalue="Python.Main_Window" />
-        <item itemvalue="Python.Main_menu123" />
+        <item itemvalue="Python.main_window" />
+        <item itemvalue="Python.menu" />
+        <item itemvalue="Python.main_window" />
       </list>
     </recent_temporary>
   </component>
