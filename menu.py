@@ -9,7 +9,7 @@ class Menu:
                      ('игра по сети', 'игра оффлайн', 'настройки', 'выйти'),
                      (lambda: self.parent.restart_surface('game'),
                       lambda: print('2'),
-                      lambda: print('3'),
+                      lambda: self.parent.restart_surface('settings'),
                       lambda: self.parent.restart_surface('registration')))
         self.parent.create_textbox((50, 225), (400, 100))
         self.parent.create_button((460, 230),

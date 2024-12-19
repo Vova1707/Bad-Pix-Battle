@@ -22,3 +22,6 @@ class Client:
 
     def move(self, side):
         self.sock.sendall(bytes(json.dumps({"request": "move", "move": side}), 'UTF-8'))
+
+    def stoping(self):
+        self.sock.sendall(bytes(json.dumps({"request": "stop"}), 'UTF-8'))

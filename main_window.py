@@ -12,6 +12,7 @@ import pygame_widgets
 from pygame_widgets.button import ButtonArray, Button
 from pygame_widgets.textbox import TextBox
 from pygame import K_1, K_2
+from settings import Settings
 
 
 
@@ -46,6 +47,8 @@ class Main_Window:
         self.user = None
 
         #self.view_logo()
+        pygame.mixer.music.load('music/music.mp3')
+        pygame.mixer.music.play()
         self.listen_all()
 
     def view_logo(self):
@@ -64,7 +67,8 @@ class Main_Window:
                                     'game': Game(self),
                                     'registration': Registration(self),
                                     'game_over': Game_Over(self),
-                                    'game_win': Game_Win(self)}
+                                    'game_win': Game_Win(self),
+                                    'settings': Settings(self)}
         self.active_surface = 'registration'
         self.options_window_widget = np.array([])
         self.update_window = True
@@ -99,7 +103,7 @@ class Main_Window:
 
 
     def log_in(self, login, passoword):
-        if len(login) > 8 and len(passoword) > 8:
+        if len(login) > 3 and len(passoword) > 3:
             if self.database_users.add_user("Новый пользователь", login, passoword):
                 self.user = self.database_users.find_user(login, passoword)
                 print(self.user)
@@ -116,6 +120,12 @@ class Main_Window:
     def rename_user(self, name):
         self.database_users.update_name_users(name, self.user[0])
         self.user = self.database_users.find_user(self.user[2], self.user[3])
+
+    def music_on(self):
+        pygame.mixer.music.unpause()
+
+    def music_off(self):
+        pygame.mixer.music.pause()
 
 
     def create_buttons(self, coords, size, shape, texts, funcs,
