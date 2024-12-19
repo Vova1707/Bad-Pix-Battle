@@ -37,11 +37,20 @@ class Server:
             "id": id,
             "x": 400,
             "y": 300,
-            "is_moving": 0,
-            "jump": 5
+            "is_moving": 1,
+            'left_right': 1,
         }
+        self.running = False
         self.id_players.append(id)
         self.players.append(self.player)
+        self.h = 0
+        self.xxx = 0
+
+        self.x = self.player["x"]
+        self.y = self.player["y"]
+        self.mov = False
+        self.time = 0
+
         while True:
             try:
                 data = conn.recv(1024)
@@ -49,8 +58,11 @@ class Server:
                     print("Disconnect")
                     break
                 data = json.loads(data.decode('utf-8'))
+                if data["request"] == 'move':
+                    print(1)
                 sgp = {"get_all": lambda: self.get_all(conn),
                        "move": lambda: self.move(data['move']),
+                       'stop': self.stop,
                        }
                 sgp[data["request"]]()
 
@@ -58,24 +70,37 @@ class Server:
                 print(e)
                 break
         del self.id_players[self.id_players.index(id)]
-        print(self.id_players)
         self.players.remove(self.player)
 
     def get_all(self, conn):
         conn.sendall(bytes(json.dumps({"response": self.players}), 'UTF-8'))
 
+    def stop(self):
+        self.player['is_moving'] = 0
+        self.player["left_right"] = 0
+
     def move(self, moving):
-        print(moving)
-        self.player['is_moving'] = self.player['is_moving'] % 4 + 1 if self.player['is_moving'] % 4 == 0 else \
-        self.player['is_moving'] % 4
-        moved = {"left": lambda: self.moving("x", -10),
-                 'right': lambda: self.moving("x", 10),
-                 'up': lambda: self.moving("y", -10),
-                 'down': lambda: self.moving("y", 10),
+        moved = {"left": lambda: self.moving("x", -10, 1),
+                 'right': lambda: self.moving("x", 10, 2),
+                 'up': lambda: self.moving("y", -10, 1),
+                 'down': lambda: self.moving("y", 10, 2),
                  }
         moved[moving]()
 
-    def moving(self, coord, value):
+    def moving(self, coord, value, l_r=False):
+        if self.player['is_moving'] == 0:
+            self.player['is_moving'] += 1
+
+        if l_r:
+            self.player["left_right"] = l_r
+        if self.xxx > 2:
+            if self.player['is_moving'] >= 3:
+                self.player['is_moving'] = 1
+            else:
+                self.player['is_moving'] += 1
+                self.xxx = 0
+        else:
+            self.xxx += 1
         self.player[coord] += value
 
 
