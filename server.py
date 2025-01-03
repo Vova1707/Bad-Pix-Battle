@@ -2,8 +2,8 @@ import socket
 from threading import Thread
 import json
 
-HOST, PORT = 'localhost', 12220  # Адрес сервера
-MAX_PLAYERS = 4  # Максимальное кол-во подключений
+HOST, PORT = 'localhost', 12220
+MAX_PLAYERS = 4
 
 
 SERVER_ROOM_WIDTH = 4000
@@ -33,6 +33,7 @@ class Server:
 
     def handle_client(self, conn):
         id = list(filter(lambda f: f not in self.id_players, range(1, 5)))[0]
+
         self.player = {
             "id": id,
             "x": 400,
@@ -40,7 +41,8 @@ class Server:
             "is_moving": 1,
             'left_right': 1,
         }
-        self.running = False
+        
+
         self.id_players.append(id)
         self.players.append(self.player)
         self.h = 0
@@ -49,8 +51,6 @@ class Server:
         self.x = self.player["x"]
         self.y = self.player["y"]
         self.mov = False
-        self.time = 0
-
         while True:
             try:
                 data = conn.recv(1024)
@@ -58,8 +58,6 @@ class Server:
                     print("Disconnect")
                     break
                 data = json.loads(data.decode('utf-8'))
-                if data["request"] == 'move':
-                    print(1)
                 sgp = {"get_all": lambda: self.get_all(conn),
                        "move": lambda: self.move(data['move']),
                        'stop': self.stop,

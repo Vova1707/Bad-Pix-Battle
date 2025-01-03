@@ -1,11 +1,17 @@
 import pygame
 import numpy as np
-from pygame import K_LEFT, K_RIGHT, K_UP, K_DOWN
-
-from player import Player
 from client import Client
 
 HOST, PORT = "localhost", 12220
+
+class Player(pygame.sprite.Sprite):
+    def __init__(self, pos, img, img_1):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load(f"Images/Players/player_1/player_1_{img}_{img_1}.png").convert_alpha()
+        self.rect = self.image.get_rect(center=pos)
+
+    def move(self):
+        pass
 
 
 class Game:
@@ -13,17 +19,13 @@ class Game:
         self.parent = parent
         self.vvv = 0
         self.screen = parent.screen
-        self.pole = np.array([
-            [0] * 10,
-            [0] * 10,
-            [0] * 10,
-            [0] * 10,
-            [0] * 10,
-            [0] * 10,
-            [0] * 10,
-            [1] + [0] * 8 + [1],
-            [1] * 10,
-            [1] * 10])
+        self.comands = {
+            pygame.KEYDOWN:
+                {(pygame.K_RIGHT, pygame.K_d): lambda: self.client.move("right"),
+                 (pygame.K_LEFT, pygame.K_a): lambda: self.client.move("left"),
+                 (pygame.K_UP, pygame.K_s): lambda: self.client.move("up"),
+                 (pygame.K_DOWN, pygame.K_d): lambda: self.client.move("down"),
+                 }}
 
     def create_widgets(self):
         self.client = Client((HOST, PORT))
@@ -37,10 +39,10 @@ class Game:
                 pygame.quit()
         self.key = pygame.key.get_pressed()
 
-        gf = {K_RIGHT: lambda: self.client.move("right"),
-              K_LEFT: lambda: self.client.move("left"),
-              K_UP: lambda: self.client.move("up"),
-              K_DOWN: lambda: self.client.move("down"),
+        gf = {pygame.K_RIGHT: lambda: self.client.move("right"),
+              pygame.K_LEFT: lambda: self.client.move("left"),
+              pygame.K_UP: lambda: self.client.move("up"),
+              pygame.K_DOWN: lambda: self.client.move("down"),
               }
         self.d = 0
         for i in gf.keys():

@@ -13,17 +13,18 @@ from pygame_widgets.button import ButtonArray, Button
 from pygame_widgets.textbox import TextBox
 from pygame import K_1, K_2
 from settings import Settings
+from game_ofline import Game_Offline, Menu_Game_Offline
 
 
 
 pygame.init()
-WINDOW_HEIGHT, WINDOW_WEIGHT = 1000, 1000
+WINDOW_WEIGHT, WINDOW_HEIGHT = 1600, 1000
 HOST, PORT = "localhost", 12200
 
 
 class Main_Window:
     def __init__(self):
-        self.screen = pygame.display.set_mode((WINDOW_HEIGHT, WINDOW_WEIGHT))
+        self.screen = pygame.display.set_mode((WINDOW_WEIGHT, WINDOW_HEIGHT))
         self.RUN = True
         pygame.display.set_caption('Bad Pix Battle')
         self.clock = pygame.time.Clock()
@@ -37,7 +38,6 @@ class Main_Window:
             'buttton_colour_defaut': (100, 100, 100),
             'buttton_colour_hover': (255, 255, 255),
             'buttton_colour_clicked': (255, 0, 0),
-
             'text_colours': (0, 0, 0),
 
         }
@@ -52,15 +52,11 @@ class Main_Window:
         self.listen_all()
 
     def view_logo(self):
-        """
-        Показ логотипа на 2 секунды
-        """
         logo = pygame.image.load('ааав.jpeg')
         self.screen.fill((255, 255, 255))
         self.screen.blit(logo, (0, 0))
         pygame.display.flip()
         pygame.time.wait(2000)
-
 
     def listen_all(self):
         self.list_active_surface = {'menu': Menu(self),
@@ -68,29 +64,30 @@ class Main_Window:
                                     'registration': Registration(self),
                                     'game_over': Game_Over(self),
                                     'game_win': Game_Win(self),
-                                    'settings': Settings(self)}
-        self.active_surface = 'registration'
+                                    'settings': Settings(self),
+                                    'game_ofline': Menu_Game_Offline(self),
+                                    'level_1': Game_Offline(self, 1)}
+        self.active_surface = 'menu'
         self.options_window_widget = np.array([])
         self.update_window = True
 
         while self.RUN:
+            self.screen.fill((255, 0, 0))
             events = pygame.event.get()
+            if self.update_window:
+                self.list_active_surface[self.active_surface].create_widgets()
+                print(self.active_surface)
+                self.update_window = False
+            self.list_active_surface[self.active_surface].listen()
             for event in events:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     self.RUN = False
-            self.key = pygame.key.get_pressed()
-            if self.key[K_1]:
-                self.restart_surface('game_over')
-            if self.key[K_2]:
-                self.restart_surface('game_win')
-            if self.update_window:
-                self.list_active_surface[self.active_surface].create_widgets()
-                self.update_window = False
-            self.list_active_surface[self.active_surface].listen()
+                self.list_active_surface[self.active_surface].listen_event(event)
             pygame_widgets.update(events)
             pygame.display.update()
-            self.clock.tick(30)
+            self.clock.tick(90)
+
 
 
     def restart_surface(self, name):
@@ -138,6 +135,7 @@ class Main_Window:
             height=size[1],
             shape=shape,
             border=border,
+            fonts=[pygame.font.Font('Font/DotGothic16-Regular.ttf', 30)] * len(texts),
             texts=texts,
             colour=colour if colour else self.colors['butttonsfon_colour_defaut'],
             inactiveColours=[colour1 if colour1 else self.colors['buttton_colour_defaut']] * len(texts),
@@ -149,13 +147,13 @@ class Main_Window:
 
 
     def create_button(self, coords, size, text, r, func, colour=False, border_colour=False, colour1=False, colour2=False, colour3=False):
-        print(colour, self.colors['buttton_colour_defaut'])
         button = Button(
             self.screen,
             x=coords[0],
             y=coords[1],
             width=size[0],
             height=size[1],
+            font=pygame.font.Font('Font/DotGothic16-Regular.ttf', 30),
             text=text,
             fontSize=10,
             colour=colour if colour else self.colors['buttton_colour_defaut'],
@@ -174,6 +172,7 @@ class Main_Window:
         y=coords[1],
         width=size[0],
         height=size[1],
+        font=pygame.font.Font('Font/DotGothic16-Regular.ttf', 20),
         fontSize=50,
         borderColour=border_colour if border_colour else self.colors['border_colour'],
         textColour=text_colour if text_colour else self.colors['text_colours'],
@@ -182,8 +181,10 @@ class Main_Window:
         self.widgets = np.append(self.widgets, [textbox])
 
     def create_text(self, text, size, pos, color, background):
-        f = pygame.font.SysFont('Century Gothic', size)
+        f = pygame.font.Font('Font/DotGothic16-Regular.ttf', size)
         text = f.render(text, 1, color)
         self.screen.blit(text, pos)
+
+
 if __name__ == "__main__":
     Main_Window().__init__()
