@@ -4,25 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8ba5288-f801-41b4-9c3f-a0742cfe7338" name="Changes" comment="add images">
-      <change afterPath="$PROJECT_DIR$/Font/DotGothic16-Regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Font/EpilepsySans.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Images/Blocks/дерево/1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Images/Blocks/камень/0.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Images/Fon/Game.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Images/Fon/Main_Menu.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Images/Object/торговая_лавка.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/Main_menu/main_menu.JPEG" beforeDir="false" afterPath="$PROJECT_DIR$/Images/Fon/main_menu.JPEG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/Settings/cursor.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/databases/users.db" beforeDir="false" afterPath="$PROJECT_DIR$/databases/users.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game_online.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_online.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_window.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/registration.py" beforeDir="false" afterPath="$PROJECT_DIR$/registration.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
+    <list default="true" id="e8ba5288-f801-41b4-9c3f-a0742cfe7338" name="Changes" comment="add game_ofline">
+      <change afterPath="$PROJECT_DIR$/Images/Blocks/дерево/0.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Images/Blocks/дерево/2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Images/Blocks/дерево/3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Images/Blocks/дерево/4.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Images/Fon/Game_Menu.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Images/Shell/шар.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Kart/kart_1.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game_ofline.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Images/Main_menu/Главная надпись.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,11 +72,11 @@
       <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Blocks" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Shell" />
+      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Resource" />
       <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Font" />
       <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Object" />
       <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Kart" />
-      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Blocks\дерево" />
-      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Blocks\камень" />
     </key>
   </component>
   <component name="RunManager" selected="Python.main_window (1)">
@@ -391,7 +382,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734633103759</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="add game_ofline">
+      <option name="closed" value="true" />
+      <created>1735907717061</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1735907717061</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -423,6 +422,7 @@
     <MESSAGE value="add arhitectory and menu and registration menu" />
     <MESSAGE value="add settings and server__client__online-game" />
     <MESSAGE value="add images" />
-    <option name="LAST_COMMIT_MESSAGE" value="add images" />
+    <MESSAGE value="add game_ofline" />
+    <option name="LAST_COMMIT_MESSAGE" value="add game_ofline" />
   </component>
 </project>
