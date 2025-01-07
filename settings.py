@@ -13,11 +13,11 @@ class Settings:
         self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game_Menu.jpg"), (1600, 1000)),
                                 (0, 0))
         self.parent.create_text(f'Настройки', 100, (300, 20), (0, 0, 0), (200, 100, 50))
-        self.parent.create_text(f'Имя: {self.parent.user[1]}', 24, (50, 150), (0, 0, 0), (200, 100, 50))
-        self.parent.create_text(f'Логин: {self.parent.user[2]}', 24, (50, 200), (0, 0, 0), (200, 100, 50))
-        self.parent.create_text(f'Побед: 0', 24, (50, 250), (0, 0, 0), (200, 100, 50))
-        self.parent.create_text(f'Поражения: 0', 24, (50, 300), (0, 0, 0), (200, 100, 50))
-        self.parent.create_text(f'Ничья: 0', 24, (50, 350), (0, 0, 0), (200, 100, 50))
+        self.parent.create_text(f'WASD - Передвижение', 24, (50, 150), (0, 0, 0), (200, 100, 50))
+        self.parent.create_text(f'F - Стрельба', 24, (50, 200), (0, 0, 0), (200, 100, 50))
+        self.parent.create_text(f'Стрелочки - выбор инвертаря', 24, (50, 250), (0, 0, 0), (200, 100, 50))
+        self.parent.create_text(f'Правая кнопка мыши - ломание блока', 24, (50, 300), (0, 0, 0), (200, 100, 50))
+        self.parent.create_text(f'Левая кнопка мыши - поставить блок', 24, (50, 350), (0, 0, 0), (200, 100, 50))
 
     def listen_event(self, event):
         pass

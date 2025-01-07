@@ -12,7 +12,10 @@ class Database_With_Users:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 username TEXT NOT NULL,
                 login TEXT NOT NULL UNIQUE,
-                password TEXT NOT NULL)
+                password TEXT NOT NULL,
+                win INTEGER,
+                draw INTEGER,
+                lose INTEGER)
             '''
         )
         self.connection.commit()
@@ -23,8 +26,8 @@ class Database_With_Users:
 
     def add_user(self, username, login, password):
         try:
-            self.cursor.execute("INSERT INTO users (username, login, password) VALUES (?, ?, ?)",
-                                (username, login, password))
+            self.cursor.execute("INSERT INTO users (username, login, password, win, draw, lose) VALUES (?, ?, ?, ?, ?, ?)",
+                                (username, login, password, 0, 0, 0))
             self.connection.commit()
             return True
         except sqlite3.IntegrityError:
