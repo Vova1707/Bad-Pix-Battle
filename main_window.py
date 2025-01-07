@@ -11,9 +11,9 @@ from game_win import Game_Win
 import pygame_widgets
 from pygame_widgets.button import ButtonArray, Button
 from pygame_widgets.textbox import TextBox
-from pygame import K_1, K_2
+from rating import Rating
 from settings import Settings
-from game_ofline import Game_Offline, Menu_Game_Offline
+from game_ofline import Game_Offline, Menu_Game_Offline, Game_Win_Offline, Game_Lose_Offline
 
 
 
@@ -65,18 +65,26 @@ class Main_Window:
                                     'game_over': Game_Over(self),
                                     'game_win': Game_Win(self),
                                     'settings': Settings(self),
-                                    'game_ofline': Menu_Game_Offline(self),
-                                    'level_1': Game_Offline(self, 1)}
-        self.active_surface = 'menu'
+                                    'rating': Rating(self),
+                                    'game_offline': Menu_Game_Offline(self),
+                                    'game_win_offline': Game_Win_Offline(self),
+                                    'game_lose_offline': Game_Lose_Offline(self),
+                                    'level_1': Game_Offline(self, 1),
+                                    'level_2': Game_Offline(self, 2),
+                                    'level_3': Game_Offline(self, 3),
+                                    'level_4': Game_Offline(self, 4),
+                                    'level_5': Game_Offline(self, 5),
+                                    }
+        self.active_surface = 'game_offline'
         self.options_window_widget = np.array([])
         self.update_window = True
 
         while self.RUN:
             self.screen.fill((255, 0, 0))
+            pygame.mixer.music.pause()
             events = pygame.event.get()
             if self.update_window:
                 self.list_active_surface[self.active_surface].create_widgets()
-                print(self.active_surface)
                 self.update_window = False
             self.list_active_surface[self.active_surface].listen()
             for event in events:

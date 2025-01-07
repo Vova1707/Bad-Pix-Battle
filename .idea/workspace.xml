@@ -5,15 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8ba5288-f801-41b4-9c3f-a0742cfe7338" name="Changes" comment="add game_ofline">
-      <change afterPath="$PROJECT_DIR$/Images/Blocks/дерево/0.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Images/Blocks/дерево/2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Images/Blocks/дерево/3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Images/Blocks/дерево/4.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Images/Fon/Game_Menu.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Images/Shell/шар.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Kart/kart_1.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game_ofline.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/Main_menu/Главная надпись.png" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/Images/Fon/heart.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Images/Fon/шкала.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Images/Object/Золотое_Яблоко.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Images/Object/генератор_снарядов.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Kart/kart_2.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Kart/kart_3.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Kart/kart_4.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Kart/kart_5.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rating.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Kart/kart_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Kart/kart_1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/databases.py" beforeDir="false" afterPath="$PROJECT_DIR$/databases.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/databases/users.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_ofline.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_ofline.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_window.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ааав.jpeg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,25 +53,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.Main_Window (1).executor": "Run",
-    "Python.Main_Window.executor": "Run",
-    "Python.Main_menu.executor": "Run",
-    "Python.Main_menu123.executor": "Run",
-    "Python.Menu.executor": "Run",
-    "Python.client.executor": "Run",
-    "Python.game_online.executor": "Run",
-    "Python.main_window (1).executor": "Run",
-    "Python.player.executor": "Run",
-    "Python.server.executor": "Run",
-    "Python.sjkx.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature__project/Kondrahin__server",
-    "last_opened_file_path": "C:/Users/konde/PycharmProjects/Bad Pix Battle/Images/Fon",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.Main_Window (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.Main_Window.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Main_menu.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Main_menu123.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Menu.executor&quot;: &quot;Run&quot;,
+    &quot;Python.client.executor&quot;: &quot;Run&quot;,
+    &quot;Python.game_online.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main_window (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.player.executor&quot;: &quot;Run&quot;,
+    &quot;Python.server.executor&quot;: &quot;Run&quot;,
+    &quot;Python.sjkx.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature__project/Kondrahin__server&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/konde/PycharmProjects/Bad Pix Battle/Images/Fon&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Fon" />
@@ -72,10 +81,10 @@
       <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Blocks" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Object" />
       <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Shell" />
       <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Resource" />
       <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Font" />
-      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Object" />
       <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Kart" />
     </key>
   </component>
