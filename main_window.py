@@ -75,13 +75,13 @@ class Main_Window:
                                     'level_4': Game_Offline(self, 4),
                                     'level_5': Game_Offline(self, 5),
                                     }
-        self.active_surface = 'game_offline'
+        self.active_surface = 'level_1'
         self.options_window_widget = np.array([])
         self.update_window = True
-
+        self.user = ('id', 'имя', 'логин', 'пароль', 0, 0, 0)
+        pygame.mixer.music.pause()
         while self.RUN:
             self.screen.fill((255, 0, 0))
-            pygame.mixer.music.pause()
             events = pygame.event.get()
             if self.update_window:
                 self.list_active_surface[self.active_surface].create_widgets()
