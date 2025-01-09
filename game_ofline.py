@@ -5,14 +5,14 @@ import datetime
 import pygame
 
 # группы спрайтов
-all_sprites = pygame.sprite.Group()
+all_sprites = []
 
-base_cells = pygame.sprite.Group()
-players = pygame.sprite.Group()
-breaking_block = pygame.sprite.Group()
-other_object = pygame.sprite.Group()
-shells = pygame.sprite.Group()
-breaking_shells = pygame.sprite.Group()
+base_cells = []
+players = []
+breaking_block = []
+other_object = []
+shells = []
+breaking_shells = []
 
 groups = [other_object, base_cells, breaking_block, players, shells, breaking_shells]
 
@@ -141,8 +141,11 @@ class Board:
 
 class Block(pygame.sprite.Sprite):
     def __init__(self, pos, image=False):
-        super().__init__(all_sprites)
         pygame.sprite.Sprite.__init__(self)
+
+        all_sprites.append(self)
+        self.group = base_cells
+        self.die = False
 
         self.param = {
             'forse': 0,
@@ -152,7 +155,7 @@ class Block(pygame.sprite.Sprite):
 
         if image:
             self.update_cell()
-            self.add(base_cells)
+            create(self)
         else:
             self.image = pygame.Surface((40, 40))
             pygame.draw.rect(self.image, (0, 0, 0), (0, 0, 40, 40))
@@ -161,7 +164,7 @@ class Block(pygame.sprite.Sprite):
 
     def create_block(self, img, forse=False):
         self.param['image'] = img
-        self.add(base_cells)
+        create(self)
         self.param['forse'] = forse
         self.update_cell()
 
@@ -169,7 +172,7 @@ class Block(pygame.sprite.Sprite):
         if self.param['image'] != 'камень':
             self.param['forse'] -= score
             if self.param['forse'] <= 0:
-                base_cells.remove(self)
+                self.die = True
                 self.create_breaking_block()
                 self.image = pygame.Surface((40, 40))
                 self.param['image'] = None
@@ -186,12 +189,15 @@ class Block(pygame.sprite.Sprite):
         Breaking_Block(self.param['pos'], self.param['image'])
 
 
-
 class Breaking_Block(pygame.sprite.Sprite):
     def __init__(self, pos, image=False):
-        super().__init__(all_sprites)
         pygame.sprite.Sprite.__init__(self)
-        self.add(breaking_block)
+
+        self.group = breaking_block
+        all_sprites.append(self)
+        self.die = False
+        create(self)
+
         self.param = {
             'image': image
         }
@@ -216,9 +222,11 @@ class Breaking_Block(pygame.sprite.Sprite):
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, pos, player, atak):
-        super().__init__(all_sprites)
         pygame.sprite.Sprite.__init__(self)
-        self.add(players)
+        all_sprites.append(self)
+        self.group = players
+        self.die = False
+        create(self)
 
         self.player = {
             'heart': 100,
@@ -234,34 +242,28 @@ class Enemy(pygame.sprite.Sprite):
         self.time = datetime.datetime.now().time()
 
     def update(self):
-        if not self.player['lose']:
-            self.move(0, 10)
-            for shell in filter(lambda f: f.rect.colliderect(self.rect) and f.player != self, shells):
-                shell.kill()
-                self.player['heart'] -= shell.hp
-            if self.player['atak']:
-                if abs(self.rect.x - self.player['main_player'].rect.x) <= 500 and abs(
-                        self.rect.y - self.player['main_player'].rect.y) <= 200:
-                    if datetime.datetime.now().time().second - self.time.second >= 1:
-                        print(1)
-                        self.shoot((self.player['main_player'].rect.y, self.player['main_player'].rect.x))
-                        self.time = datetime.datetime.now().time()
-            self.check_kill()
+        self.move(0, 10)
+        for shell in filter(lambda f: f.rect.colliderect(self.rect) and f.player != self, shells):
+            shell.kill()
+            self.player['heart'] -= shell.hp
+        if self.player['atak']:
+            if abs(self.rect.x - self.player['main_player'].rect.x) <= 500 and abs(
+                    self.rect.y - self.player['main_player'].rect.y) <= 200:
+                if datetime.datetime.now().time().second - self.time.second >= 1:
+                    print(1)
+                    self.shoot((self.player['main_player'].rect.y, self.player['main_player'].rect.x))
+                    self.time = datetime.datetime.now().time()
+        self.check_kill()
+
 
     def check_kill(self):
         if self.rect.y > 900:
             self.player['heart'] = 0
         if self.player['heart'] <= 0:
-            self.player['lose'] = True
+            self.die = True
             player = list(filter(lambda player: isinstance(player, Player), players))[0]
             player.player['score'] += 1
             player.update_task('enemy')
-            self.remove(all_sprites)
-            self.remove(players)
-            self.kill()
-            return False
-        return True
-
 
     def shoot(self, pos):
         shell = 'шар'
@@ -292,9 +294,12 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, id):
 
         # группы
-        super().__init__(all_sprites)
         pygame.sprite.Sprite.__init__(self)
-        self.add(players)
+        all_sprites.append(self)
+        self.group = players
+        self.die = False
+        create(self)
+
         pos = (500, 520)
         self.player = {
             # Движение
@@ -351,18 +356,16 @@ class Player(pygame.sprite.Sprite):
         for break_block in filter(lambda f: f.rect.colliderect(self.rect), breaking_block):
             self.add_obj('block', break_block.param['image'])
             self.update_task('block')
-            breaking_block.remove(break_block)
-            break_block.kill()
+            break_block.die = True
 
         for shell in filter(lambda f: f.rect.colliderect(self.rect) and f.player != self, shells):
-            shell.kill()
+            shell.die = True
             self.player['heart'] -= shell.hp
 
         for break_shell in filter(lambda f: f.rect.colliderect(self.rect), breaking_shells):
             self.add_obj('shells', break_shell.param['image'])
             self.update_task('shell')
-            breaking_shells.remove(break_shell)
-            break_shell.kill()
+            break_shell.die = True
 
         v = 0
         if self.player['run']:
@@ -392,7 +395,7 @@ class Player(pygame.sprite.Sprite):
     def check_kill(self):
         if self.rect.y > 900:
             self.player['heart'] = 0
-        if self.player['heart'] <= 0: self.kill()
+        if self.player['heart'] <= 0: self.die = True
 
 
     def moving_player(self, napravlenie, znachenie):
@@ -438,9 +441,11 @@ class Player(pygame.sprite.Sprite):
 
 class Shell(pygame.sprite.Sprite):
     def __init__(self, player, k, b, napr, shell, v, hp_delete):
-        super().__init__(all_sprites)
         pygame.sprite.Sprite.__init__(self)
-        self.add(shells)
+        all_sprites.append(self)
+        self.group = shells
+        self.die = False
+        create(self)
 
 
         self.image = pygame.transform.scale(pygame.image.load(f"Images/Shell/{shell}.jpg"), (30, 30))
@@ -456,7 +461,6 @@ class Shell(pygame.sprite.Sprite):
         self.hp = hp_delete
 
         self.player = player
-        self.die = False
 
     def update(self):
         if not self.die:
@@ -465,15 +469,16 @@ class Shell(pygame.sprite.Sprite):
             check = list(filter(lambda cell: self.rect.colliderect(cell.rect), base_cells))
             if check:
                 check[0].break_block(self.hp // 20)
-                self.kill()
                 self.die = True
 
 
 class Breaking_Shell(pygame.sprite.Sprite):
     def __init__(self, pos, image=False):
-        super().__init__(all_sprites)
         pygame.sprite.Sprite.__init__(self)
-        self.add(breaking_shells)
+        all_sprites.append(self)
+        self.group = breaking_shells
+        self.die = False
+        create(self)
         self.param = {
             'image': image
         }
@@ -501,9 +506,11 @@ class Object(pygame.sprite.Sprite):
     def __init__(self, img, pos, size, funct, is_breaking=False):
         self.param = {'image': img,
                       'pos': pos,}
-        super().__init__(all_sprites)
         pygame.sprite.Sprite.__init__(self)
-        self.add(other_object)
+        all_sprites.append(self)
+        self.group = other_object
+        self.die = False
+        create(self)
 
         self.image = pygame.transform.scale(pygame.image.load(f"Images/Object/{img}"), size)
         self.rect = self.image.get_rect()
@@ -557,13 +564,13 @@ class Object(pygame.sprite.Sprite):
             if len(player[0].player['inventory']) < 4:
                 player[0].player['inventory'].append(self.param['image'])
                 player[0].update_task('gold_apple')
-                self.kill()
+                self.die = True
                 self.start = 1
             elif False in player[0].player['inventory']:
                 player[0].player['inventory'].insert(player[0].player['inventory'].index(False), self.param['image'])
                 del player[0].player['inventory'][player[0].player['inventory'].index(False)]
                 player[0].update_task('gold_apple')
-                self.kill()
+                self.die = True
                 self.start = 1
 
     def portal(self):
@@ -587,6 +594,15 @@ class Object(pygame.sprite.Sprite):
 
     def update(self):
         self.funct_for_object[self.funct]()
+
+
+def create(obj):
+    if obj not in obj.group: obj.group.append(obj)
+
+
+def check_delete(obj):
+    if obj.die and obj in obj.group: del obj.group[obj.group.index(obj)]
+
 
 
 class Game_Offline:
@@ -617,7 +633,7 @@ class Game_Offline:
     def create_widgets(self):
         self.main_player = Player(1)
         self.board = Board(self.main_player, self.kart)
-        self.parent.create_button((1400, 0), (200, 80), 'Выйти', 0, self.close_game)
+        self.parent.create_button((1400, 0), (200, 80), 'Выйти', 0, lambda: self.close_game('game_offline'))
         self.game_screen = self.board.game_screen
         for i in all_sprites:
             print(i.__class__.__name__)
@@ -681,14 +697,22 @@ class Game_Offline:
 
         self.board.game_screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game.jpg"), (6400, 1000)), (0, 0))
 
+        for i in all_sprites[::-1]: check_delete(i)
         for group in groups:
-            group.draw(self.board.game_screen)
-        all_sprites.update()
+            for obj in group[::-1]:
+                check_delete(obj)
+
+        pos_x = -self.main_player.rect.x + 400 if self.main_player.rect.x > 400 else 0
+        pos_x = -4800 if pos_x < -4800 else pos_x
+        for i in filter(lambda obj: obj.rect.right >= -pos_x and obj.rect.left <= -pos_x + 1600, all_sprites): i.update()
+        for group in groups:
+            for obj in filter(lambda obj: obj.rect.right >= -pos_x and obj.rect.left <= -pos_x + 1600, group):
+                self.board.game_screen.blit(obj.image, obj.rect)
 
         if self.main_player.player['heart'] <= 0:
-            self.lose_game()
+            self.close_game('game_lose_offline')
         if self.main_player.player['win']:
-            self.win_game()
+            self.close_game('game_win_offline')
 
 
 
@@ -736,23 +760,10 @@ class Game_Offline:
         self.screen.blit(self.board.game_screen, (pos_x, 160))
 
 
-    def close_game(self):
-        global all_sprites
-        for i in all_sprites: i.kill()
-        all_sprites = pygame.sprite.Group()
-        self.parent.restart_surface('game_offline')
-
-    def win_game(self):
-        global all_sprites
-        for i in all_sprites: i.kill()
-        all_sprites = pygame.sprite.Group()
-        self.parent.restart_surface('game_win_offline')
-
-    def lose_game(self):
-        global all_sprites
-        for i in all_sprites: i.kill()
-        all_sprites = pygame.sprite.Group()
-        self.parent.restart_surface('game_lose_offline')
+    def close_game(self, name):
+        for group in groups: group.clear()
+        all_sprites.clear()
+        self.parent.restart_surface(name)
 
 
 
