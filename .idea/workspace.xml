@@ -4,25 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8ba5288-f801-41b4-9c3f-a0742cfe7338" name="Changes" comment="add game_ofline">
-      <change afterPath="$PROJECT_DIR$/Images/Fon/heart.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Images/Fon/шкала.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Images/Object/Золотое_Яблоко.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Images/Object/генератор_снарядов.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Kart/kart_2.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Kart/kart_3.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Kart/kart_4.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Kart/kart_5.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rating.py" afterDir="false" />
+    <list default="true" id="e8ba5288-f801-41b4-9c3f-a0742cfe7338" name="Changes" comment="add game offline">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kart/kart_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Kart/kart_1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/databases.py" beforeDir="false" afterPath="$PROJECT_DIR$/databases.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/databases/users.db" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/game_ofline.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_ofline.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main_window.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_window.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ааав.jpeg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,24 +52,24 @@
     &quot;Python.sjkx.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;feature__project/Kondrahin__server&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/konde/PycharmProjects/Bad Pix Battle/Images/Fon&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/konde/PycharmProjects/Bad Pix Battle/Images/Task&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Task" />
+      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Object" />
       <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Fon" />
       <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Font" />
       <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle" />
-      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Object" />
-      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Blocks" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Task" />
+      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Fon" />
       <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Object" />
       <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Shell" />
       <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Images\Resource" />
-      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Font" />
-      <recent name="C:\Users\konde\PycharmProjects\Bad Pix Battle\Kart" />
     </key>
   </component>
   <component name="RunManager" selected="Python.main_window (1)">
@@ -399,7 +383,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735907717061</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="add game offline">
+      <option name="closed" value="true" />
+      <created>1736279103748</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1736279103748</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -432,6 +424,7 @@
     <MESSAGE value="add settings and server__client__online-game" />
     <MESSAGE value="add images" />
     <MESSAGE value="add game_ofline" />
-    <option name="LAST_COMMIT_MESSAGE" value="add game_ofline" />
+    <MESSAGE value="add game offline" />
+    <option name="LAST_COMMIT_MESSAGE" value="add game offline" />
   </component>
 </project>
