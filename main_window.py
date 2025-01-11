@@ -2,7 +2,7 @@ import pygame
 import numpy as np
 
 
-from game_online import Game
+from game_online import Game, Menu_Game_Online, Game_Lose_Online, Game_Win_Online
 from menu import Menu
 from databases import Database_With_Users
 from registration import Registration
@@ -60,7 +60,10 @@ class Main_Window:
 
     def listen_all(self):
         self.list_active_surface = {'menu': Menu(self),
-                                    'game': Game(self),
+                                    'game_online': Menu_Game_Online(self,),
+                                    'game_onl': Game(self, 1),
+                                    'game_win_online': Game_Win_Online(self),
+                                    'game_lose_online': Game_Lose_Online(self),
                                     'registration': Registration(self),
                                     'game_over': Game_Over(self),
                                     'game_win': Game_Win(self),
@@ -75,7 +78,7 @@ class Main_Window:
                                     'level_4': Game_Offline(self, 4),
                                     'level_5': Game_Offline(self, 5),
                                     }
-        self.active_surface = 'level_1'
+        self.active_surface = 'menu'
         self.options_window_widget = np.array([])
         self.update_window = True
         self.user = ('id', 'имя', 'логин', 'пароль', 0, 0, 0)

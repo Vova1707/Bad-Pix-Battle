@@ -74,7 +74,7 @@ obj_for_kart = {1: {'object': [{'img': 'генератор.jpg', 'pos': (1200, 6
 
 
 class Board:
-    def __init__(self, player, kart):
+    def __init__(self, player=False, kart=False):
         self.board_kart = np.array([list(map(int, list(i.replace('\n', '')))) for i in open(
             f'Kart/kart_{kart}.txt').readlines()])
         self.cell_size = 40
@@ -97,9 +97,9 @@ class Board:
                     color = False
                 self.desk[-1].append(Block((40 * j, 40 * i), color))
 
-    def get_cell(self, mouse_pos):
-        player = self.main_player
-        y, x = self.celling(mouse_pos)
+    def get_cell(self, mouse_pos, player=False):
+        if not player: player = self.main_player
+        y, x = self.celling(mouse_pos, player)
         if y > 0 and x > 0 and y < 1000 and x < 6400 and abs(player.rect.x - x) < 200 and abs(player.rect.y - y) < 200:
             y = y // 40
             x = x // 40
@@ -114,21 +114,23 @@ class Board:
             return False
 
 
-    def celling(self, mouse_pos):
-        i = self.main_player.rect.x - 400 if self.main_player.rect.x - 400 > 0 else 0
+    def celling(self, mouse_pos, player=False):
+        if not player: player = self.main_player
+        i = player.rect.x - 400 if player.rect.x - 400 > 0 else 0
         i = 4800 if i > 4800 else i
         x = mouse_pos[0] + i
         y = mouse_pos[1] - 160
         return (y, x)
 
 
-    def click(self, mouse_pos, func=None):
-        cell = self.get_cell(mouse_pos)
+    def click(self, mouse_pos, func=None, player=False):
+        if not player: player = self.main_player
+        cell = self.get_cell(mouse_pos, player)
         if cell:
             i, j = cell
             if func == 'add':
-                if self.board_kart[i][j] == 0 and len(self.main_player.player['block']) > 0:
-                    block = self.main_player.next_block()
+                if self.board_kart[i][j] == 0 and len(player.player['block']) > 0:
+                    block = player.next_block()
                     self.desk[i][j].create_block(block, dict_cells_group[block])
                     self.board_kart[i][j] = -dict_cells_group[block]
             elif func == 'delete':
@@ -176,6 +178,7 @@ class Block(pygame.sprite.Sprite):
                 self.create_breaking_block()
                 self.image = pygame.Surface((40, 40))
                 self.param['image'] = None
+                self.img_path = False
                 self.param['forse'] = 0
                 pygame.draw.rect(self.image, (0, 0, 0), (0, 0, 40, 40))
             else:
@@ -183,6 +186,7 @@ class Block(pygame.sprite.Sprite):
 
     def update_cell(self):
         img = self.param['image'] + '/' + str(self.param['forse'])
+        self.img_path = f'Images/Blocks/{img}.jpg'
         self.image = pygame.transform.scale(pygame.image.load(f'Images/Blocks/{img}.jpg'), (40, 40))
 
     def create_breaking_block(self):
@@ -202,6 +206,7 @@ class Breaking_Block(pygame.sprite.Sprite):
             'image': image
         }
         img = self.param['image'] + '/' + '0'
+        self.img_path = f'Images/Blocks/{img}.jpg'
         self.image = pygame.transform.scale(pygame.image.load(f'Images/Blocks/{img}.jpg'), (30, 30))
         self.rect = pygame.Rect(pos[0], pos[1], 40, 40)
 
@@ -234,7 +239,7 @@ class Enemy(pygame.sprite.Sprite):
             'atak': atak,
             'lose': False
         }
-
+        self.img_path = f"Images/Players/player_2/player_2_0_0.png"
         self.image = pygame.transform.scale(pygame.image.load(f"Images/Players/player_2/player_2_0_0.png"), (50, 100))
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
@@ -242,18 +247,20 @@ class Enemy(pygame.sprite.Sprite):
         self.time = datetime.datetime.now().time()
 
     def update(self):
-        self.move(0, 10)
-        for shell in filter(lambda f: f.rect.colliderect(self.rect) and f.player != self, shells):
-            shell.kill()
-            self.player['heart'] -= shell.hp
-        if self.player['atak']:
-            if abs(self.rect.x - self.player['main_player'].rect.x) <= 500 and abs(
-                    self.rect.y - self.player['main_player'].rect.y) <= 200:
-                if datetime.datetime.now().time().second - self.time.second >= 1:
-                    print(1)
-                    self.shoot((self.player['main_player'].rect.y, self.player['main_player'].rect.x))
-                    self.time = datetime.datetime.now().time()
-        self.check_kill()
+        if not self.die:
+            self.move(0, 10)
+            for shell in filter(lambda f: f.rect.colliderect(self.rect) and f.player != self, shells):
+                shell.die = True
+                shell.kill()
+                self.player['heart'] -= shell.hp
+            if self.player['atak']:
+                if abs(self.rect.x - self.player['main_player'].rect.x) <= 500 and abs(
+                        self.rect.y - self.player['main_player'].rect.y) <= 200:
+                    if datetime.datetime.now().time().second - self.time.second >= 1:
+                        print(1)
+                        self.shoot((self.player['main_player'].rect.y, self.player['main_player'].rect.x))
+                        self.time = datetime.datetime.now().time()
+            self.check_kill()
 
 
     def check_kill(self):
@@ -320,6 +327,7 @@ class Player(pygame.sprite.Sprite):
             'win': False,
             'task': {}
         }
+        self.img_path = "Images/Players/player_2/player_2_0_0.png"
         self.image = pygame.transform.scale(pygame.image.load(f"Images/Players/player_1/player_1_0_0.png"), (50, 100))
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
@@ -387,6 +395,7 @@ class Player(pygame.sprite.Sprite):
         one = self.player['id']
         two = 2 if self.player['right'] else 1 if self.player['left'] else 0
         three = 0 if not two else self.player['cadr']
+        self.img_path = f"Images/Players/player_{one}/player_{one}_{two}_{three}.png"
         self.image = pygame.transform.scale(pygame.image.load(f"Images/Players/player_{one}/player_{one}_{two}_{three}.png"), (50, 100))
         self.move(0, 10)
         self.check_kill()
@@ -418,6 +427,7 @@ class Player(pygame.sprite.Sprite):
 
 
     def shoot(self, pos):
+        print(pos)
         shell = self.next_shell()
         if shell:
             k = (self.rect.y - pos[0]) / (self.rect.x - pos[1])
@@ -446,8 +456,7 @@ class Shell(pygame.sprite.Sprite):
         self.group = shells
         self.die = False
         create(self)
-
-
+        self.img_path = f"Images/Shell/{shell}.jpg"
         self.image = pygame.transform.scale(pygame.image.load(f"Images/Shell/{shell}.jpg"), (30, 30))
         self.rect = self.image.get_rect()
 
@@ -511,7 +520,7 @@ class Object(pygame.sprite.Sprite):
         self.group = other_object
         self.die = False
         create(self)
-
+        self.img_path = f"Images/Object/{img}"
         self.image = pygame.transform.scale(pygame.image.load(f"Images/Object/{img}"), size)
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
@@ -697,10 +706,12 @@ class Game_Offline:
 
         self.board.game_screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game.jpg"), (6400, 1000)), (0, 0))
 
+        score = 0
         for i in all_sprites[::-1]: check_delete(i)
         for group in groups:
             for obj in group[::-1]:
                 check_delete(obj)
+                score += 1
 
         pos_x = -self.main_player.rect.x + 400 if self.main_player.rect.x > 400 else 0
         pos_x = -4800 if pos_x < -4800 else pos_x
