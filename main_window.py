@@ -1,7 +1,6 @@
 import pygame
 import numpy as np
 
-
 from game_online import Game, Menu_Game_Online, Game_Lose_Online, Game_Win_Online
 from menu import Menu
 from databases import Database_With_Users
@@ -60,8 +59,8 @@ class Main_Window:
 
     def listen_all(self):
         self.list_active_surface = {'menu': Menu(self),
-                                    'game_online': Menu_Game_Online(self,),
-                                    'game_onl': Game(self, 1),
+                                    'game_online_menu': Menu_Game_Online(self,),
+                                    'game_online': Game(self, 1),
                                     'game_win_online': Game_Win_Online(self),
                                     'game_lose_online': Game_Lose_Online(self),
                                     'registration': Registration(self),
@@ -78,7 +77,7 @@ class Main_Window:
                                     'level_4': Game_Offline(self, 4),
                                     'level_5': Game_Offline(self, 5),
                                     }
-        self.active_surface = 'menu'
+        self.active_surface = 'registration'
         self.options_window_widget = np.array([])
         self.update_window = True
         self.user = ('id', 'имя', 'логин', 'пароль', 0, 0, 0)
@@ -97,7 +96,7 @@ class Main_Window:
                 self.list_active_surface[self.active_surface].listen_event(event)
             pygame_widgets.update(events)
             pygame.display.update()
-            self.clock.tick(90)
+            self.clock.tick(200)
 
 
 
@@ -111,7 +110,7 @@ class Main_Window:
 
 
     def log_in(self, login, passoword):
-        if len(login) > 3 and len(passoword) > 3:
+        if len(login) > 3 and len(passoword) > 3 and len(login) < 15:
             if self.database_users.add_user("Новый пользователь", login, passoword):
                 self.user = self.database_users.find_user(login, passoword)
                 print(self.user)
@@ -119,7 +118,7 @@ class Main_Window:
 
 
     def log_up(self, login, passoword):
-        if len(login) > 8 and len(passoword) > 8:
+        if len(login) > 3 and len(passoword) > 3 and len(login) < 15:
             self.user = self.database_users.find_user(login, passoword)
             print(self.user)
             if self.user:
@@ -127,6 +126,10 @@ class Main_Window:
 
     def rename_user(self, name):
         self.database_users.update_name_users(name, self.user[0])
+        self.user = self.database_users.find_user(self.user[2], self.user[3])
+
+    def rating_user(self, data, zn=False):
+        self.database_users.update_data_for_user(self.user[0], data, zn)
         self.user = self.database_users.find_user(self.user[2], self.user[3])
 
     def music_on(self):

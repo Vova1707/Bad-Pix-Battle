@@ -7,7 +7,7 @@ class Menu:
     def create_widgets(self):
         self.parent.create_buttons((50, 350), (500, 600), (1, 4),
                      ('игра по сети', 'игра оффлайн', 'профиль', 'настройки'),
-                     (lambda: self.parent.restart_surface('game_online'),
+                     (lambda: self.parent.restart_surface('game_online_menu'),
                       lambda: self.parent.restart_surface('game_offline'),
                       lambda: self.parent.restart_surface('rating'),
                       lambda: self.parent.restart_surface('settings')))

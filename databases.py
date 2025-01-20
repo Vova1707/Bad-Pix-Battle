@@ -15,7 +15,15 @@ class Database_With_Users:
                 password TEXT NOT NULL,
                 win INTEGER,
                 draw INTEGER,
-                lose INTEGER)
+                lose INTEGER, 
+                levels INTEGER,
+                m1 INTEGER,
+                m2 INTEGER,
+                m3 INTEGER,
+                m4 INTEGER,
+                m5 INTEGER,
+                almaz INTEGER
+                )
             '''
         )
         self.connection.commit()
@@ -24,10 +32,19 @@ class Database_With_Users:
         self.cursor.execute("UPDATE users SET username = ? WHERE id = ?", (new_name, id))
         self.connection.commit()
 
+    def update_data_for_user(self, id, data, zn):
+        query = f"SELECT {data} FROM users WHERE id = {id}"
+        self.cursor.execute(query)
+        if not zn: data_after = self.cursor.fetchone()[0] + 1
+        else: data_after = self.cursor.fetchone()[0] + zn
+        print(data_after)
+        self.cursor.execute(f"UPDATE users SET {data} = ? WHERE id = ?", (data_after, id))
+        self.connection.commit()
+
     def add_user(self, username, login, password):
         try:
-            self.cursor.execute("INSERT INTO users (username, login, password, win, draw, lose) VALUES (?, ?, ?, ?, ?, ?)",
-                                (username, login, password, 0, 0, 0))
+            self.cursor.execute("INSERT INTO users (username, login, password, win, draw, lose, levels, m1, m2, m3, m4, m5, almaz) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                                (username, login, password, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0))
             self.connection.commit()
             return True
         except sqlite3.IntegrityError:

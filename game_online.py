@@ -1,5 +1,6 @@
 import pygame
 import numpy as np
+
 from client import Client
 import random
 import datetime
@@ -10,6 +11,10 @@ from game_ofline import Board, Player, Enemy, Object, check_delete, obj_for_kart
 HOST, PORT = "localhost", 12220
 
 
+'''all_sprites, base_cells, players, breaking_block, other_object, shells, breaking_shells = (np.array([]), 
+                                                                                           np.array([]), np.array([]), 
+                                                                                           np.array([]), np.array([]), 
+                                                                                           np.array([]), np.array([]))'''
 all_sprites = []
 
 base_cells = []
@@ -18,6 +23,7 @@ breaking_block = []
 other_object = []
 shells = []
 breaking_shells = []
+
 
 groups = [other_object, base_cells, breaking_block, players, shells, breaking_shells]
 
@@ -44,6 +50,7 @@ class Game:
                  (pygame.K_w,): lambda: self.client.move_player('up', False),
                  (pygame.K_s,): lambda: self.client.move_player('run', False),
                  },
+
         }
 
     def create_widgets(self):
@@ -56,8 +63,6 @@ class Game:
             self.pos = self.client.pos
         if event.type == pygame.MOUSEBUTTONDOWN:
             self.client.click((event.pos[0], event.pos[1]), 'add' if event.button == 1 else 'delete' if event.button == 3 else False)
-
-
         if event.type in self.comands.keys():
             key = list(filter(lambda d: event.key in d, self.comands[event.type].keys()))
             if key:
@@ -134,7 +139,8 @@ class Game:
         print(self.client.drawing['pos'])
 
     def close_game(self, name):
-        for group in groups: group.clear()
+        for group in groups:
+            group.clear()
         all_sprites.clear()
         self.parent.restart_surface(name)
 
@@ -144,12 +150,14 @@ class Menu_Game_Online:
         self.parent = parent
 
     def create_widgets(self):
-        self.parent.create_button((500, 450), (600, 150), 'Зайти в игру', 0, lambda: self.parent.restart_surface('game_onl'))
+        self.parent.create_button((600, 450), (400, 100), 'Зайти в игру', 0, lambda: self.parent.restart_surface('game_online'))
+        self.parent.create_textbox((500, 300), (600, 100))
         self.parent.create_button((50, 25), (175, 75), 'Выйти', 0, lambda: self.parent.restart_surface('menu'))
 
     def listen(self):
             self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game_Menu.jpg"), (1600, 1000)), (0, 0))
             self.parent.create_text(f'Онлайн Режим', 60, (450, 50), (0, 0, 0), (200, 100, 50))
+            self.parent.create_text(f'Пароль комнаты', 40, (530, 200), (0, 0, 0), (200, 100, 50))
 
     def listen_event(self, event):
         pass
@@ -159,7 +167,7 @@ class Game_Lose_Online:
         self.parent = parent
 
     def create_widgets(self):
-        self.parent.create_button((650, 400), (300, 150), 'Выход', 0, lambda: self.parent.restart_surface('game_online'))
+        self.parent.create_button((650, 400), (300, 150), 'Выход', 0, lambda: self.parent.restart_surface('game_online_menu'))
 
     def listen(self):
         self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game_Menu.jpg"), (1600, 1000)),
@@ -175,7 +183,7 @@ class Game_Win_Online:
         self.parent = parent
 
     def create_widgets(self):
-        self.parent.create_button((650, 400), (300, 150), 'Выход', 0, lambda: self.parent.restart_surface('game_offline'))
+        self.parent.create_button((650, 400), (300, 150), 'Выход', 0, lambda: self.parent.restart_surface('game_online_menu'))
 
     def listen(self):
         self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game_Menu.jpg"), (1600, 1000)),
