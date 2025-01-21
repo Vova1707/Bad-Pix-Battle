@@ -1,7 +1,7 @@
 import sqlite3
 
 class Database_With_Users:
-    def __init__(self, name='databases/users.db'):
+    def __init__(self, name='Databases/users.db'):
         self.connection = sqlite3.connect(name)
         self.cursor = self.connection.cursor()
         self.create_table()
@@ -37,13 +37,13 @@ class Database_With_Users:
         self.cursor.execute(query)
         if not zn: data_after = self.cursor.fetchone()[0] + 1
         else: data_after = self.cursor.fetchone()[0] + zn
-        print(data_after)
         self.cursor.execute(f"UPDATE users SET {data} = ? WHERE id = ?", (data_after, id))
         self.connection.commit()
 
     def add_user(self, username, login, password):
         try:
-            self.cursor.execute("INSERT INTO users (username, login, password, win, draw, lose, levels, m1, m2, m3, m4, m5, almaz) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            self.cursor.execute("INSERT INTO users (username, login, password, win, draw, lose, levels, m1, "
+                                "m2, m3, m4, m5, almaz) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                                 (username, login, password, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0))
             self.connection.commit()
             return True

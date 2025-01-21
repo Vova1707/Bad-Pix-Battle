@@ -1,19 +1,15 @@
-import pygame
 import numpy as np
-import random
 import datetime
 import pygame
 
-# группы спрайтов
+# группы спрайтов(небольшие прототипы для начала игры)
 all_sprites = []
-
 base_cells = []
 players = []
 breaking_block = []
 other_object = []
 shells = []
 breaking_shells = []
-
 groups = [other_object, base_cells, breaking_block, players, shells, breaking_shells]
 
 
@@ -33,47 +29,67 @@ dict_shell_group = {'шар': (30, 30),
 
 j = {'block': 5}
 # Объекты карты
-obj_for_kart = {1: {'object': [{'img': 'генератор.jpg', 'pos': (1200, 620), 'size': (100, 100), 'funct': 'generate_breaking_block'},
+obj_for_kart = {1: {'object': [{'img': 'генератор.jpg', 'pos': (1200, 620), 'size': (100, 100),
+                                'funct': 'generate_breaking_block'},
                                {'img': 'портал.png', 'pos': (3000, 440), 'size': (200, 250), 'funct': 'portal'},
                                {'img': '1.png', 'pos': (600, 550), 'size': (40, 80), 'funct': 'medal'}],
                     'enemy': [],
                     'task': {}},
 
-                2: {'object': [{'img': 'генератор.jpg', 'pos': (200, 620), 'size': (100, 100), 'funct': 'generate_breaking_block'},
-                               {'img': 'генератор.jpg', 'pos': (400, 620), 'size': (100, 100), 'funct': 'generate_breaking_shell'},
-                               {'img': 'портал.png', 'pos': (3000, 440), 'size': (200, 250), 'funct': 'portal'},
-                               {'img': '2.png', 'pos': (2200, 550), 'size': (40, 80), 'funct': 'medal'}],
+                2: {'object': [{'img': 'генератор.jpg', 'pos': (200, 620), 'size': (100, 100),
+                                'funct': 'generate_breaking_block'},
+                               {'img': 'генератор.jpg', 'pos': (400, 620), 'size': (100, 100),
+                                'funct': 'generate_breaking_shell'},
+                               {'img': 'портал.png', 'pos': (3000, 440),
+                                'size': (200, 250), 'funct': 'portal'},
+                               {'img': '2.png', 'pos': (2200, 550),
+                                'size': (40, 80), 'funct': 'medal'}],
                     'enemy': [{'pos': (2000, 520), 'atak': False}],
                     'task': {'block': 5, 'shell': 1, 'enemy': 1}},
 
-                3: {'object': [{'img': 'генератор.jpg', 'pos': (300, 620), 'size': (100, 100), 'funct': 'generate_breaking_shell'},
-                               {'img': 'генератор.jpg', 'pos': (600, 620), 'size': (100, 100), 'funct': 'generate_breaking_block'},
-                               {'img': 'генератор.jpg', 'pos': (2400, 620), 'size': (100, 100), 'funct': 'generate_breaking_shell'},
-                               {'img': 'торговая_лавка.png', 'pos': (2500, 390), 'size': (400, 250), 'funct': 'generate_inventory'},
-                               {'img': 'генератор.jpg', 'pos': (4200, 620), 'size': (100, 100), 'funct': 'generate_breaking_block'},
+                3: {'object': [{'img': 'генератор.jpg', 'pos': (300, 620),
+                                'size': (100, 100), 'funct': 'generate_breaking_shell'},
+                               {'img': 'генератор.jpg', 'pos': (600, 620), 'size': (100, 100),
+                                'funct': 'generate_breaking_block'},
+                               {'img': 'генератор.jpg', 'pos': (2400, 620), 'size': (100, 100),
+                                'funct': 'generate_breaking_shell'},
+                               {'img': 'торговая_лавка.png', 'pos': (2500, 390), 'size': (400, 250),
+                                'funct': 'generate_inventory'},
+                               {'img': 'генератор.jpg', 'pos': (4200, 620), 'size': (100, 100),
+                                'funct': 'generate_breaking_block'},
                                {'img': 'портал.png', 'pos': (5000, 440), 'size': (200, 250), 'funct': 'portal'},
                                {'img': '3.png', 'pos': (2200, 550), 'size': (40, 80), 'funct': 'medal'}],
                     'enemy': [{'pos': (600, 500), 'atak': False}, {'pos': (2800, 520), 'atak': True}],
                     'task': {'shell': 3, 'enemy': 2, 'gold_apple': 1}},
 
 
-                4: {'object': [{'img': 'генератор.jpg', 'pos': (700, 620), 'size': (100, 100), 'funct': 'generate_breaking_block'},
-                               {'img': 'генератор.jpg', 'pos': (4000, 620), 'size': (100, 100), 'funct': 'generate_breaking_shell'},
-                               {'img': 'генератор.jpg', 'pos': (2730, 620), 'size': (100, 100), 'funct': 'generate_breaking_block'},
-                               {'img': 'торговая_лавка.png', 'pos': (2300, 390), 'size': (400, 250), 'funct': 'generate_inventory'},
-                               {'img': 'генератор.jpg', 'pos': (4300, 620), 'size': (100, 100), 'funct': 'generate_breaking_block'},
+                4: {'object': [{'img': 'генератор.jpg', 'pos': (700, 620), 'size': (100, 100),
+                                'funct': 'generate_breaking_block'},
+                               {'img': 'генератор.jpg', 'pos': (4000, 620), 'size': (100, 100),
+                                'funct': 'generate_breaking_shell'},
+                               {'img': 'генератор.jpg', 'pos': (2730, 620), 'size': (100, 100),
+                                'funct': 'generate_breaking_block'},
+                               {'img': 'торговая_лавка.png', 'pos': (2300, 390), 'size': (400, 250),
+                                'funct': 'generate_inventory'},
+                               {'img': 'генератор.jpg', 'pos': (4300, 620), 'size': (100, 100),
+                                'funct': 'generate_breaking_block'},
                                {'img': 'портал.png', 'pos': (5300, 440), 'size': (200, 250), 'funct': 'portal'},
                                {'img': '4.png', 'pos': (2900, 550), 'size': (40, 80), 'funct': 'medal'}],
                     'enemy': [{'pos': (2200, 500), 'atak': True}, {'pos': (4200, 500), 'atak': True}],
                     'task': {'enemy': 2, 'gold_apple': 2, 'shell': 3, 'block': 10}},
 
-                5: {'object': [{'img': 'генератор.jpg', 'pos': (700, 620), 'size': (100, 100), 'funct': 'generate_breaking_block'},
-                               {'img': 'торговая_лавка.png', 'pos': (200, 390), 'size': (400, 250), 'funct': 'generate_inventory'},
-                               {'img': 'генератор.jpg', 'pos': (2000, 620), 'size': (100, 100), 'funct': 'generate_breaking_shell'},
-                               {'img': 'генератор.jpg', 'pos': (2700, 620), 'size': (100, 100), 'funct': 'generate_breaking_block'},
+                5: {'object': [{'img': 'генератор.jpg', 'pos': (700, 620), 'size': (100, 100),
+                                'funct': 'generate_breaking_block'},
+                               {'img': 'торговая_лавка.png', 'pos': (200, 390), 'size': (400, 250),
+                                'funct': 'generate_inventory'},
+                               {'img': 'генератор.jpg', 'pos': (2000, 620), 'size': (100, 100),
+                                'funct': 'generate_breaking_shell'},
+                               {'img': 'генератор.jpg', 'pos': (2700, 620), 'size': (100, 100),
+                                'funct': 'generate_breaking_block'},
                                {'img': 'портал.png', 'pos': (6000, 440), 'size': (200, 250), 'funct': 'portal'},
                                {'img': '5.png', 'pos': (2900, 550), 'size': (40, 80), 'funct': 'medal'}],
-                    'enemy': [{'pos': (800, 500), 'atak': True}, {'pos': (2500, 500), 'atak': True}, {'pos': (4000, 500), 'atak': True}],
+                    'enemy': [{'pos': (800, 500), 'atak': True}, {'pos': (2500, 500), 'atak': True},
+                              {'pos': (4000, 500), 'atak': True}],
                 'task': {'enemy': 3, 'gold_apple': 2, 'shell': 5, 'block': 10}}}
 
 
@@ -245,7 +261,8 @@ class Enemy(pygame.sprite.Sprite):
             'lose': False
         }
         self.img_path = f"Images/Players/player_2/player_2_0_0.png"
-        self.image = pygame.transform.scale(pygame.image.load(f"Images/Players/player_2/player_2_0_0.png"), (50, 100))
+        self.image = pygame.transform.scale(pygame.image.load(f"Images/Players/player_2/player_2_0_0.png"),
+                                            (50, 100))
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = pos[1]
@@ -334,7 +351,8 @@ class Player(pygame.sprite.Sprite):
             'medal': False
         }
         self.img_path = "Images/Players/player_2/player_2_0_0.png"
-        self.image = pygame.transform.scale(pygame.image.load(f"Images/Players/player_1/player_1_0_0.png"), (50, 100))
+        self.image = pygame.transform.scale(pygame.image.load(f"Images/Players/player_1/player_1_0_0.png"),
+                                            (50, 100))
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = pos[1]
@@ -402,7 +420,8 @@ class Player(pygame.sprite.Sprite):
         two = 2 if self.player['right'] else 1 if self.player['left'] else 0
         three = 0 if not two else self.player['cadr']
         self.img_path = f"Images/Players/player_{one}/player_{one}_{two}_{three}.png"
-        self.image = pygame.transform.scale(pygame.image.load(f"Images/Players/player_{one}/player_{one}_{two}_{three}.png"), (50, 100))
+        self.image = pygame.transform.scale(pygame.image.load(f"Images/Players/player_{one}/" +
+                                                              f"player_{one}_{two}_{three}.png"), (50, 100))
         self.move(0, 10)
         self.check_kill()
 
@@ -429,7 +448,8 @@ class Player(pygame.sprite.Sprite):
 
     def update_inventory_index(self, score):
         self.player['inventory_index'] += score
-        self.player['inventory_index'] = 0 if self.player['inventory_index'] > 3 else 3 if self.player['inventory_index'] < 0 else self.player['inventory_index']
+        self.player['inventory_index'] = 0 if self.player['inventory_index'] > 3 else 3 if (
+                self.player['inventory_index'] < 0) else self.player['inventory_index']
 
 
     def shoot(self, pos):
@@ -568,7 +588,8 @@ class Object(pygame.sprite.Sprite):
             self.start = 1
         else:
             if datetime.datetime.now().time().second - self.time.second >= 10:
-                Object('Золотое_Яблоко.png', (self.rect.x + self.rect.w // 2, self.rect.y - 20),(30, 30), 'inventory')
+                Object('Золотое_Яблоко.png', (self.rect.x + self.rect.w // 2, self.rect.y - 20),(30, 30),
+                       'inventory')
                 self.time = datetime.datetime.now().time()
 
 
@@ -590,12 +611,14 @@ class Object(pygame.sprite.Sprite):
                 self.start = 1
 
     def portal(self):
-        player = list(filter(lambda player: self.rect.colliderect(player.rect) and isinstance(player, Player) and player.rect.x - self.rect.x > 50, players))
+        player = list(filter(lambda player: self.rect.colliderect(player.rect) and isinstance(player, Player)
+                                            and player.rect.x - self.rect.x > 50, players))
         if player:
             if not list(filter(lambda task: task, player[0].player['task'].values())): player[0].player['win'] = True
 
     def medal(self):
-        player = list(filter(lambda player: self.rect.colliderect(player.rect) and isinstance(player, Player), players))
+        player = list(filter(lambda player: self.rect.colliderect(player.rect) and
+                                            isinstance(player, Player), players))
         if player:
             player[0].player['medal'] = self.img_path
             self.die = True
@@ -691,11 +714,13 @@ class Game_Offline:
         self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/шкала.png"), (450, 120)),
                                 (650, 0))
 
-        pygame.draw.rect(self.parent.screen, (255, 0, 0), (210, 30, 400 * (self.main_player.player['heart'] / 100) // 1, 40))
+        pygame.draw.rect(self.parent.screen, (255, 0, 0), (210, 30, 400 *
+                                                           (self.main_player.player['heart'] / 100) // 1, 40))
         pygame.draw.rect(self.parent.screen, (0, 0, 0), (210, 30, 400, 40), 5)
 
         if self.main_player.player['medal']:
-            self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"{self.main_player.player['medal']}"), (70, 120)),
+            self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"{self.main_player.player['medal']}"),
+                                                           (70, 120)),
                                     (1300, 0))
 
 
@@ -705,9 +730,14 @@ class Game_Offline:
 
         for i in range(len(self.main_player.player['inventory'])):
             if self.main_player.player['inventory'][i]:
-                self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Object/{self.main_player.player['inventory'][i]}"), (70, 70)), (690 + i * 105, 25))
+                self.parent.screen.blit(pygame.transform.scale(
+                    pygame.image.load(f"Images/Object/{self.main_player.player['inventory'][i]}"),
+                    (70, 70)), (690 + i * 105, 25))
 
-        pygame.draw.polygon(self.parent.screen, (0, 0, 0), [(700 + 105 * self.main_player.player['inventory_index'], 140), (725 + 105 * self.main_player.player['inventory_index'], 110), (750 + 105 * self.main_player.player['inventory_index'], 140)])
+        pygame.draw.polygon(self.parent.screen, (0, 0, 0),
+                            [(700 + 105 * self.main_player.player['inventory_index'], 140),
+                             (725 + 105 * self.main_player.player['inventory_index'], 110),
+                             (750 + 105 * self.main_player.player['inventory_index'], 140)])
 
         self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/heart.png"), (80, 80)),
                                 (170, 10))
@@ -717,14 +747,18 @@ class Game_Offline:
                                 (350, 105))
         self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/алмаз.png"), (50, 50)),
                                 (500, 105))
-        self.parent.create_text(f''':{len(self.main_player.player['block'])}''', 40, (250, 100), (0, 0, 0), (200, 100, 50))
-        self.parent.create_text(f''': {len(self.main_player.player['shells'])}''', 40, (400, 100), (0, 0, 0),(200, 100, 50))
-        self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/steve.png"), (150, 150)),
+        self.parent.create_text(f''':{len(self.main_player.player['block'])}''', 40, (250, 100), (0, 0, 0),
+                                (200, 100, 50))
+        self.parent.create_text(f''': {len(self.main_player.player['shells'])}''', 40, (400, 100), (0, 0, 0),
+                                (200, 100, 50))
+        self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/steve.png"),
+                                                       (150, 150)),
                                 (10, 10))
         self.parent.create_text(f''': {self.main_player.player['score']}''', 40, (550, 100), (0, 0, 0),
                                 (200, 100, 50))
 
-        self.board.game_screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game.jpg"), (6400, 1000)), (0, 0))
+        self.board.game_screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game.jpg"),
+                                                           (6400, 1000)), (0, 0))
 
         score = 0
         for i in all_sprites[::-1]: check_delete(i)
@@ -735,7 +769,8 @@ class Game_Offline:
 
         pos_x = -self.main_player.rect.x + 400 if self.main_player.rect.x > 400 else 0
         pos_x = -4800 if pos_x < -4800 else pos_x
-        for i in filter(lambda obj: obj.rect.right >= -pos_x and obj.rect.left <= -pos_x + 1600, all_sprites): i.update()
+        for i in filter(lambda obj: obj.rect.right >= -pos_x and obj.rect.left <= -pos_x + 1600, all_sprites):
+            i.update()
         for group in groups:
             for obj in filter(lambda obj: obj.rect.right >= -pos_x and obj.rect.left <= -pos_x + 1600, group):
                 self.board.game_screen.blit(obj.image, obj.rect)
@@ -747,9 +782,13 @@ class Game_Offline:
 
 
 
-        if self.board.pos_cell_x and self.board.pos_cell_y and abs(self.main_player.rect.x - self.board.pos_cell_x * 40) < 200 and abs(self.main_player.rect.y - self.board.pos_cell_y * 40) < 200:
-            pygame.draw.rect(self.board.game_screen, (255, 255, 255), pygame.Rect(self.board.pos_cell_x * 40, self.board.pos_cell_y * 40, 4, 40))
-            pygame.draw.rect(self.board.game_screen, (255, 255, 255), pygame.Rect(self.board.pos_cell_x * 40, self.board.pos_cell_y * 40, 40, 4))
+        if (self.board.pos_cell_x and self.board.pos_cell_y and
+                abs(self.main_player.rect.x - self.board.pos_cell_x * 40) < 200 and
+                abs(self.main_player.rect.y - self.board.pos_cell_y * 40) < 200):
+            pygame.draw.rect(self.board.game_screen, (255, 255, 255),
+                             pygame.Rect(self.board.pos_cell_x * 40, self.board.pos_cell_y * 40, 4, 40))
+            pygame.draw.rect(self.board.game_screen, (255, 255, 255),
+                             pygame.Rect(self.board.pos_cell_x * 40, self.board.pos_cell_y * 40, 40, 4))
             pygame.draw.rect(self.board.game_screen, (255, 255, 255),
                              pygame.Rect((self.board.pos_cell_x + 1) * 40, self.board.pos_cell_y * 40, 4, 40))
             pygame.draw.rect(self.board.game_screen, (255, 255, 255),
@@ -768,8 +807,6 @@ class Game_Offline:
                                                                    len(obj_for_kart[self.kart]['task'].keys())))
         self.board.game_screen.blit(text, (-pos_x, 0))
 
-
-
         for task in obj_for_kart[self.kart]['task'].keys():
             if self.main_player.player['task'][task] == 0:
                 color = (0, 255, 0)
@@ -785,9 +822,6 @@ class Game_Offline:
             self.board.game_screen.blit(text,
                                         (-pos_x + 120,
                                          75 + 80 * list(obj_for_kart[self.kart]['task'].keys()).index(task)))
-
-
-        #pygame.draw.rect(self.board.game_screen, (0, 0, 0), (-pos_x + 50, 10, 50, 50))
         self.screen.blit(self.board.game_screen, (pos_x, 160))
 
 
@@ -820,9 +854,11 @@ class Menu_Game_Offline:
         self.parent.create_button((50, 25), (175, 75), 'Выйти', 0, lambda: self.parent.restart_surface('menu'))
 
     def listen(self):
-            self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game_Menu.jpg"), (1600, 1000)), (0, 0))
+            self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game_Menu.jpg"),
+                                                           (1600, 1000)), (0, 0))
             self.parent.create_text(f'Уровни', 60, (600, 50), (0, 0, 0), (200, 100, 50))
-            self.parent.create_text(f'Это тренировочные игры. Победы не идут в рейтинг', 30, (55, 900), (255, 0, 0), (200, 100, 50))
+            self.parent.create_text(f'Это тренировочные игры. Победы не идут в рейтинг', 30, (55, 900), (255, 0, 0),
+                                    (200, 100, 50))
 
     def listen_event(self, event):
         pass
@@ -832,10 +868,12 @@ class Game_Lose_Offline:
         self.parent = parent
 
     def create_widgets(self):
-        self.parent.create_button((650, 400), (300, 150), 'Выход', 0, lambda: self.parent.restart_surface('game_offline'))
+        self.parent.create_button((650, 400),
+                                  (300, 150), 'Выход', 0, lambda: self.parent.restart_surface('game_offline'))
 
     def listen(self):
-        self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game_Menu.jpg"), (1600, 1000)),
+        self.parent.screen.blit(pygame.transform.scale(
+            pygame.image.load(f"Images/Fon/Game_Menu.jpg"), (1600, 1000)),
                                 (0, 0))
         self.parent.create_text(f'Вы проиграли', 60, (500, 300), (0, 0, 0), (200, 100, 50))
 
@@ -848,11 +886,12 @@ class Game_Win_Offline:
         self.parent = parent
 
     def create_widgets(self):
-        self.parent.create_button((650, 400), (300, 150), 'Выход', 0, lambda: self.parent.restart_surface('game_offline'))
+        self.parent.create_button((650, 400),
+                                  (300, 150), 'Выход', 0, lambda: self.parent.restart_surface('game_offline'))
 
     def listen(self):
-        self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game_Menu.jpg"), (1600, 1000)),
-                                (0, 0))
+        self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game_Menu.jpg"),
+                                                       (1600, 1000)), (0, 0))
         self.parent.create_text(f'Вы выиграли', 60, (500, 300), (0, 0, 0), (200, 100, 50))
 
     def listen_event(self, event):

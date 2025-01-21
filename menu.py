@@ -17,14 +17,13 @@ class Menu:
                                   lambda: self.parent.restart_surface('registration'))
 
     def listen(self):
-        self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Main_Menu.jpg"), (1600, 1000)),
+        self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Main_Menu.jpg"),
+                                                       (1600, 1000)),
                                 (0, 0))
         self.parent.create_text(f'B', 150, (330, 30), (255, 0, 0), (200, 100, 50))
         self.parent.create_text(f'P', 150, (640, 30), (0, 255, 0), (200, 100, 50))
         self.parent.create_text(f'B', 150, (910, 30), (255, 255, 50), (200, 100, 50))
         self.parent.create_text(f'ad  ix  attle', 150, (400, 30), (20, 10, 50), (200, 100, 50))
-
-        #self.parent.create_text(f'Здравствуйте, {self.parent.user[1]}', 40, (50, 100), (0, 0, 0), (200, 100, 50))
 
     def listen_event(self, event):
         pass

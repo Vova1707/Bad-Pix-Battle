@@ -5,7 +5,8 @@ class Rating:
         self.parent = parent
 
     def create_widgets(self):
-        self.parent.create_button((50, 800), (600, 80), 'На главную страницу', 0, lambda: self.parent.restart_surface('menu'))
+        self.parent.create_button((50, 800), (600, 80), 'На главную страницу', 0, lambda:
+        self.parent.restart_surface('menu'))
         self.parent.create_textbox((50, 200), (400, 100))
         self.parent.create_button((460, 210),
                                   (300, 80), 'Изменить', 0,
@@ -13,11 +14,13 @@ class Rating:
 
 
     def listen(self):
-        self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game_Menu.jpg"), (1600, 1000)),
+        self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game_Menu.jpg"),
+                                                       (1600, 1000)),
                                 (0, 0))
         self.parent.create_text(f'Профиль', 100, (500, 20), (0, 0, 0), (200, 100, 50))
 
-        self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/steve.png"), (700, 700)),
+        self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/steve.png"),
+                                                       (700, 700)),
                                 (800, 200))
 
         self.parent.create_text(f'Измените имя:', 24, (50, 150), (0, 0, 0), (200, 100, 50))

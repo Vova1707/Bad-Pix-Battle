@@ -1,5 +1,8 @@
 import pygame
 import numpy as np
+import pygame_widgets
+from pygame_widgets.button import ButtonArray, Button
+from pygame_widgets.textbox import TextBox
 
 from game_online import Game, Menu_Game_Online, Game_Lose_Online, Game_Win_Online
 from menu import Menu
@@ -7,9 +10,6 @@ from databases import Database_With_Users
 from registration import Registration
 from game_over import Game_Over
 from game_win import Game_Win
-import pygame_widgets
-from pygame_widgets.button import ButtonArray, Button
-from pygame_widgets.textbox import TextBox
 from rating import Rating
 from settings import Settings
 from game_ofline import Game_Offline, Menu_Game_Offline, Game_Win_Offline, Game_Lose_Offline
@@ -45,13 +45,14 @@ class Main_Window:
         self.database_users = Database_With_Users()
         self.user = None
 
-        #self.view_logo()
+        self.view_logo()
         pygame.mixer.music.load('music/music.mp3')
         pygame.mixer.music.play()
         self.listen_all()
 
     def view_logo(self):
-        logo = pygame.image.load('ааав.jpeg')
+        logo = pygame.transform.scale(pygame.image.load(f"Images/Fon/Main_Menu.jpg"),
+                                                       (1600, 1000))
         self.screen.fill((255, 255, 255))
         self.screen.blit(logo, (0, 0))
         pygame.display.flip()
@@ -160,7 +161,8 @@ class Main_Window:
         self.widgets = np.append(self.widgets, [button_array])
 
 
-    def create_button(self, coords, size, text, r, func, colour=False, border_colour=False, colour1=False, colour2=False, colour3=False):
+    def create_button(self, coords, size, text, r, func, colour=False, border_colour=False, colour1=False,
+                      colour2=False, colour3=False):
         button = Button(
             self.screen,
             x=coords[0],

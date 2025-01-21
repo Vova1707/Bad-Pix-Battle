@@ -1,10 +1,9 @@
 import socket
 from threading import Thread
 import json
-from game_ofline import Board, Player, Enemy, Block, Object, check_delete, obj_for_kart, Block, dict_cells_group, players
-import pygame
+
+from game_ofline import Board, Player, Object, check_delete, obj_for_kart, players
 from game_ofline import all_sprites, groups
-import numpy as np
 
 HOST, PORT = 'localhost', 12220
 MAX_PLAYERS = 4
@@ -84,7 +83,8 @@ class Server:
 
         for group in groups:
             for obj in group:
-                drawing[score] = {'size': (obj.rect.w, obj.rect.h), 'pos': (obj.rect.x, obj.rect.y), 'img': obj.img_path}
+                drawing[score] = {'size': (obj.rect.w, obj.rect.h), 'pos': (obj.rect.x, obj.rect.y),
+                                  'img': obj.img_path}
                 score += 1
         drawing['pos_player'] = self.main_player.rect.x
         drawing['player'] = self.main_player.player
