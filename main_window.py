@@ -105,7 +105,6 @@ class Main_Window:
         del self.widgets
         self.widgets = np.array([])
         self.active_surface = name
-        print(self.active_surface)
         self.update_window = True
 
 
@@ -114,14 +113,12 @@ class Main_Window:
         if len(login) > 3 and len(passoword) > 3 and len(login) < 15:
             if self.database_users.add_user("Новый пользователь", login, passoword):
                 self.user = self.database_users.find_user(login, passoword)
-                print(self.user)
                 self.restart_surface('menu')
 
 
     def log_up(self, login, passoword):
         if len(login) > 3 and len(passoword) > 3 and len(login) < 15:
             self.user = self.database_users.find_user(login, passoword)
-            print(self.user)
             if self.user:
                 self.restart_surface('menu')
 

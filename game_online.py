@@ -135,9 +135,9 @@ class Menu_Game_Online:
         self.parent = parent
 
     def create_widgets(self):
-        self.parent.create_button((600, 450), (400, 100), 'Зайти в игру', 0, lambda:
-        self.parent.restart_surface('game_online'))
         self.parent.create_textbox((500, 300), (600, 100))
+        self.parent.create_button((600, 450), (400, 100), 'Зайти в игру', 0, lambda:
+        self.check_text(''.join(self.parent.widgets[0].text)))
         self.parent.create_button((50, 25), (175, 75), 'Выйти', 0, lambda: self.parent.restart_surface('menu'))
 
     def listen(self):
@@ -145,9 +145,14 @@ class Menu_Game_Online:
                                                            (1600, 1000)), (0, 0))
             self.parent.create_text(f'Онлайн Режим', 60, (450, 50), (0, 0, 0), (200, 100, 50))
             self.parent.create_text(f'Пароль комнаты', 40, (530, 200), (0, 0, 0), (200, 100, 50))
+            self.parent.create_text(f'Введите для входа - 12345', 40, (400, 550), (255, 0, 0), (200, 100, 50))
 
     def listen_event(self, event):
         pass
+
+    def check_text(self, text):
+        if text == '12345':
+            self.parent.restart_surface('game_online')
 
 class Game_Lose_Online:
     def __init__(self, parent):
