@@ -1,4 +1,4 @@
-                                     Bad Pix Battle
+Bad Pix Battle
 
 Bad Pix Battle - это многопользовательскаяпиксельная 2D игра, которая является аналогом режима "Bed Wars" в "Minecraft".
 
