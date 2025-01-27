@@ -60,7 +60,7 @@ class Game:
     def listen(self):
         self.parent.screen.fill((196, 196, 196))
         self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game.jpg"), (6400, 1000)),
-                                    (0, 160))
+                                (0, 160))
         self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/шкала.png"), (450, 120)),
                                 (650, 0))
 
@@ -102,8 +102,6 @@ class Game:
 
         self.pos_cell_x = self.client.pos_cell_x
         self.pos_cell_y = self.client.pos_cell_y
-
-
         pos_x = -self.client.drawing['pos_player'] + 400 if self.client.drawing['pos_player'] > 400 else 0
         pos_x = -4800 if pos_x < -4800 else pos_x
         self.pos_x = pos_x
@@ -116,7 +114,7 @@ class Game:
                                                    self.client.drawing[str(i)]['size']),
                             (self.client.drawing[str(i)]['pos'][0] + pos_x, self.client.drawing[str(i)]['pos'][1] +
                              160))
-                    except:
+                    except Exception:
                         pass
         if self.client.player['heart'] <= 0:
             self.close_game('game_lose_online')
@@ -156,6 +154,7 @@ class Menu_Game_Online:
         if text == '12345' and not self.parent.act_game_onl:
             self.parent.act_game_onl = True
             self.parent.restart_surface('game_online')
+
 
 class Game_Lose_Online:
     def __init__(self, parent):

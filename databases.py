@@ -1,5 +1,6 @@
 import sqlite3
 
+
 class Database_With_Users:
     def __init__(self, name='Databases/users.db'):
         self.connection = sqlite3.connect(name)

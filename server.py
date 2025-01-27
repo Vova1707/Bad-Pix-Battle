@@ -37,9 +37,8 @@ class Server:
                     conn, addr = self.sock.accept()
                     Thread(target=self.handle_client,
                            args=(conn,)).start()
-            except:
+            except Exception:
                 print('sss')
-
 
     def handle_client(self, conn):
         id = list(filter(lambda f: f not in self.id_players, range(1, 5)))[0]
@@ -75,8 +74,10 @@ class Server:
                 pass
 
     def get_all(self, conn):
-        for i in all_sprites: i.update()
-        for i in all_sprites[::-1]: check_delete(i)
+        for i in all_sprites:
+            i.update()
+        for i in all_sprites[::-1]:
+            check_delete(i)
         for group in groups:
             for obj in group[::-1]:
                 check_delete(obj)
@@ -98,7 +99,6 @@ class Server:
     def close(self):
         all_sprites.remove(self.main_player)
         players.remove(self.main_player)
-
 
 
 if __name__ == "__main__":

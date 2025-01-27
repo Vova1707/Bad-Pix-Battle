@@ -1,5 +1,6 @@
 import pygame
 
+
 class Rating:
     def __init__(self, parent):
         self.parent = parent
@@ -11,7 +12,6 @@ class Rating:
         self.parent.create_button((460, 210),
                                   (300, 80), 'Изменить', 0,
                                   lambda: self.parent.rename_user(''.join(self.parent.widgets[1].text)))
-
 
     def listen(self):
         self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game_Menu.jpg"),
@@ -55,8 +55,6 @@ class Rating:
             pygame.transform.scale(pygame.image.load(f"Images/Fon/алмаз.png"), (50, 50)),
             (50, 740))
         self.parent.create_text(f': {self.parent.user[13]}', 24, (110, 750), (0, 0, 0), (200, 100, 50))
-
-
 
     def listen_event(self, event):
         pass

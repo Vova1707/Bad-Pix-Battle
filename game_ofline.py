@@ -93,7 +93,6 @@ obj_for_kart = {1: {'object': [{'img': 'генератор.jpg', 'pos': (1200, 6
                 'task': {'enemy': 3, 'gold_apple': 2, 'shell': 5, 'block': 10}}}
 
 
-
 class Board:
     def __init__(self, player=False, kart=False):
         self.board_kart = np.array([list(map(int, list(i.replace('\n', '')))) for i in open(
@@ -103,7 +102,6 @@ class Board:
         self.main_player = player
         self.pos_cell_x = False
         self.pos_cell_y = False
-
 
     def set_view(self):
         self.game_screen = pygame.Surface((6400, 860))
@@ -119,7 +117,8 @@ class Board:
                 self.desk[-1].append(Block((40 * j, 40 * i), color))
 
     def get_cell(self, mouse_pos, player=False):
-        if not player: player = self.main_player
+        if not player:
+            player = self.main_player
         y, x = self.celling(mouse_pos, player)
         if y > 0 and x > 0 and y < 1000 and x < 6400 and abs(player.rect.x - x) < 200 and abs(player.rect.y - y) < 200:
             y = y // 40
@@ -134,18 +133,18 @@ class Board:
         else:
             return False
 
-
     def celling(self, mouse_pos, player=False):
-        if not player: player = self.main_player
+        if not player:
+            player = self.main_player
         i = player.rect.x - 400 if player.rect.x - 400 > 0 else 0
         i = 4800 if i > 4800 else i
         x = mouse_pos[0] + i
         y = mouse_pos[1] - 160
         return (y, x)
 
-
     def click(self, mouse_pos, func=None, player=False):
-        if not player: player = self.main_player
+        if not player:
+            player = self.main_player
         cell = self.get_cell(mouse_pos, player)
         if cell:
             i, j = cell
@@ -161,8 +160,6 @@ class Board:
                 if self.board_kart[i][j] not in [0, 1]:
                     self.desk[i][j].break_block(1)
                     self.board_kart[i][j] += 1
-
-
 
 
 class Block(pygame.sprite.Sprite):
@@ -289,7 +286,6 @@ class Enemy(pygame.sprite.Sprite):
                         self.time = datetime.datetime.now().time()
             self.check_kill()
 
-
     def check_kill(self):
         if self.rect.y > 900:
             self.player['heart'] = 0
@@ -342,24 +338,22 @@ class Player(pygame.sprite.Sprite):
 
         pos = (300, 520)
         self.player = {
-            # Движение
              'id': id,
              'left': False,
              'right': False,
              'up': False,
-            'run': False,
-            'speed': 1000,
+             'run': False,
+             'speed': 1000,
              'cadr': 0,
-            # параметры
-            'score': 0,
-            'heart': 100,
-            'block': ['дерево'] * 20,
-            'shells': ['шар'] * 5,
-            'inventory': [],
-            'inventory_index': 0,
-            'win': False,
-            'task': {},
-            'medal': False
+             'score': 0,
+             'heart': 100,
+             'block': ['дерево'] * 20,
+             'shells': ['шар'] * 5,
+             'inventory': [],
+             'inventory_index': 0,
+             'win': False,
+             'task': {},
+             'medal': False
         }
         self.img_path = "Images/Players/player_2/player_2_0_0.png"
         self.image = pygame.transform.scale(pygame.image.load(f"Images/Players/player_1/player_1_0_0.png"),
@@ -387,7 +381,6 @@ class Player(pygame.sprite.Sprite):
         if key in self.player['task'].keys():
             self.player['task'][key] = max(0, self.player['task'][key] - 1)
 
-
     def choice_inventory(self):
         index = self.player['inventory_index']
         # звук поедания яблока
@@ -399,7 +392,6 @@ class Player(pygame.sprite.Sprite):
                 self.player['heart'] = min(100, self.player['heart'] + 20)
                 del self.player['inventory'][index]
                 self.player['inventory'].insert(index, False)
-
 
     def update(self):
         for break_block in filter(lambda f: f.rect.colliderect(self.rect), breaking_block):
@@ -442,12 +434,11 @@ class Player(pygame.sprite.Sprite):
         self.move(0, 10)
         self.check_kill()
 
-
     def check_kill(self):
         if self.rect.y > 900:
             self.player['heart'] = 0
-        if self.player['heart'] <= 0: self.die = True
-
+        if self.player['heart'] <= 0:
+            self.die = True
 
     def moving_player(self, napravlenie, znachenie):
         self.player[napravlenie] = znachenie
@@ -482,7 +473,6 @@ class Player(pygame.sprite.Sprite):
             hit.play()
             Shell(self, k, b, napravlenie, shell, dict_shell_group[shell][0], dict_shell_group[shell][1])
 
-
     def next_shell(self):
         if self.player['shells']:
             block = self.player['shells'][0]
@@ -490,7 +480,6 @@ class Player(pygame.sprite.Sprite):
             return block
         else:
             return False
-
 
 
 class Shell(pygame.sprite.Sprite):
@@ -554,11 +543,10 @@ class Breaking_Shell(pygame.sprite.Sprite):
         self.rect = self.rect.move(x, y)
 
 
-
 class Object(pygame.sprite.Sprite):
     def __init__(self, img, pos, size, funct, is_breaking=False):
         self.param = {'image': img,
-                      'pos': pos,}
+                      'pos': pos}
         pygame.sprite.Sprite.__init__(self)
         all_sprites.append(self)
         self.group = other_object
@@ -578,8 +566,6 @@ class Object(pygame.sprite.Sprite):
                                  'medal': lambda: self.medal()}
         self.funct = funct
 
-
-    #генерация сломанных блоков
     def generate_breaking_block(self):
         if self.start == 0:
             self.time = datetime.datetime.now().time()
@@ -591,7 +577,6 @@ class Object(pygame.sprite.Sprite):
                 hit.play()
                 Breaking_Block((self.rect.x + self.rect.w // 2, self.rect.y - 50), 'дерево')
                 self.time = datetime.datetime.now().time()
-
 
     def generate_breaking_shell(self):
         if self.start == 0:
@@ -605,17 +590,15 @@ class Object(pygame.sprite.Sprite):
                 Breaking_Shell((self.rect.x + self.rect.w // 2, self.rect.y - 50), 'шар')
                 self.time = datetime.datetime.now().time()
 
-
     def generate_inventory(self):
         if self.start == 0:
             self.time = datetime.datetime.now().time()
             self.start = 1
         else:
             if datetime.datetime.now().time().second - self.time.second >= 10:
-                Object('Золотое_Яблоко.png', (self.rect.x + self.rect.w // 2, self.rect.y - 20),(30, 30),
+                Object('Золотое_Яблоко.png', (self.rect.x + self.rect.w // 2, self.rect.y - 20), (30, 30),
                        'inventory')
                 self.time = datetime.datetime.now().time()
-
 
     def inventoty(self):
         self.move(0, 10)
@@ -635,15 +618,15 @@ class Object(pygame.sprite.Sprite):
                 self.start = 1
 
     def portal(self):
-        player = list(filter(lambda player: self.rect.colliderect(player.rect) and isinstance(player, Player)
-                                            and player.rect.x - self.rect.x > 50, players))
+        player = list(filter(lambda player:
+                             self.rect.colliderect(player.rect) and isinstance(player, Player)
+                             and player.rect.x - self.rect.x > 50, players))
         if player:
             print(1)
             if not list(filter(lambda task: task, player[0].player['task'].values())): player[0].player['win'] = True
 
     def medal(self):
-        player = list(filter(lambda player: self.rect.colliderect(player.rect) and
-                                            isinstance(player, Player), players))
+        player = list(filter(lambda player: self.rect.colliderect(player.rect) and isinstance(player, Player), players))
         if player:
             if not self.die:
                 # звук медали
@@ -651,7 +634,6 @@ class Object(pygame.sprite.Sprite):
                 hit.play()
                 player[0].player['medal'] = self.img_path
             self.die = True
-
 
     def move(self, x, y):
         rect_x = self.rect.move(x, 0)
@@ -664,18 +646,18 @@ class Object(pygame.sprite.Sprite):
             y = 0
         self.rect = self.rect.move(x, y)
 
-
     def update(self):
         self.funct_for_object[self.funct]()
 
 
 def create(obj):
-    if obj not in obj.group: obj.group.append(obj)
+    if obj not in obj.group:
+        obj.group.append(obj)
 
 
 def check_delete(obj):
-    if obj.die and obj in obj.group: del obj.group[obj.group.index(obj)]
-
+    if obj.die and obj in obj.group:
+        del obj.group[obj.group.index(obj)]
 
 
 class Game_Offline:
@@ -724,8 +706,6 @@ class Game_Offline:
             Enemy(i['pos'], self.main_player, i['atak'])
         self.main_player.player['task'] = obj_for_kart[self.kart]['task'].copy()
 
-
-
     def listen_event(self, event):
         if event.type == pygame.MOUSEMOTION:
             self.board.get_cell(event.pos)
@@ -751,8 +731,6 @@ class Game_Offline:
             self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"{self.main_player.player['medal']}"),
                                                            (70, 120)),
                                     (1300, 0))
-
-
         pygame.draw.rect(self.parent.screen, (255, 255, 0),
                          (210, 70, 400 * (self.main_player.player['speed'] / 1000) // 1, 15))
         pygame.draw.rect(self.parent.screen, (0, 0, 0), (210, 70, 400, 15), 5)
@@ -790,7 +768,8 @@ class Game_Offline:
                                                            (6400, 1000)), (0, 0))
 
         score = 0
-        for i in all_sprites[::-1]: check_delete(i)
+        for i in all_sprites[::-1]:
+            check_delete(i)
         for group in groups:
             for obj in group[::-1]:
                 check_delete(obj)
@@ -850,14 +829,15 @@ class Game_Offline:
             text = f.render(f'{obj_for_kart[self.kart]['task'][task] - self.main_player.player['task'][task]}/'
                             f'{obj_for_kart[self.kart]['task'][task]}', 1, color)
 
-            self.board.game_screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Task/{task}.png"), (50, 50)),
-                                    (-pos_x + 60, 80 + 80 * list(obj_for_kart[self.kart]['task'].keys()).index(task)))
+            self.board.game_screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Task/{task}.png"),
+                                                               (50, 50)),
+                                        (-pos_x + 60, 80 + 80 *
+                                         list(obj_for_kart[self.kart]['task'].keys()).index(task)))
 
             self.board.game_screen.blit(text,
                                         (-pos_x + 120,
                                          75 + 80 * list(obj_for_kart[self.kart]['task'].keys()).index(task)))
         self.screen.blit(self.board.game_screen, (pos_x, 160))
-
 
     def close_game(self, name):
         if name == 'game_win_offline':
@@ -868,11 +848,10 @@ class Game_Offline:
                 self.medaling = True
                 self.parent.rating_user(f'm{self.kart}')
             self.parent.rating_user('almaz', self.main_player.player['score'])
-        for group in groups: group.clear()
+        for group in groups:
+            group.clear()
         all_sprites.clear()
         self.parent.restart_surface(name)
-
-
 
 
 class Menu_Game_Offline:
@@ -888,14 +867,15 @@ class Menu_Game_Offline:
         self.parent.create_button((50, 25), (175, 75), 'Выйти', 0, lambda: self.parent.restart_surface('menu'))
 
     def listen(self):
-            self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game_Menu.jpg"),
-                                                           (1600, 1000)), (0, 0))
-            self.parent.create_text(f'Уровни', 60, (600, 50), (0, 0, 0), (200, 100, 50))
-            self.parent.create_text(f'Это тренировочные игры. Победы не идут в рейтинг', 30, (55, 900), (255, 0, 0),
-                                    (200, 100, 50))
+        self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game_Menu.jpg"),
+                                                       (1600, 1000)), (0, 0))
+        self.parent.create_text(f'Уровни', 60, (600, 50), (0, 0, 0), (200, 100, 50))
+        self.parent.create_text(f'Это тренировочные игры. Победы не идут в рейтинг', 30, (55, 900), (255, 0, 0),
+                                (200, 100, 50))
 
     def listen_event(self, event):
         pass
+
 
 class Game_Lose_Offline:
     def __init__(self, parent):

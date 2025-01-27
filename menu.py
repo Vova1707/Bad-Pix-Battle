@@ -1,5 +1,6 @@
 import pygame
 
+
 class Menu:
     def __init__(self, parent):
         self.parent = parent

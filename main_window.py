@@ -15,7 +15,6 @@ from settings import Settings
 from game_ofline import Game_Offline, Menu_Game_Offline, Game_Win_Offline, Game_Lose_Offline
 
 
-
 pygame.init()
 WINDOW_WEIGHT, WINDOW_HEIGHT = 1600, 1000
 HOST, PORT = "localhost", 12222
@@ -106,8 +105,6 @@ class Main_Window:
             pygame.display.update()
             self.clock.tick(200)
 
-
-
     def restart_surface(self, name, no_button=False):
         del self.widgets
         self.widgets = np.array([])
@@ -118,14 +115,11 @@ class Main_Window:
         self.active_surface = name
         self.update_window = True
 
-
-
     def log_in(self, login, passoword):
         if len(login) > 3 and len(passoword) > 3 and len(login) < 25:
             if self.database_users.add_user("Новый пользователь", login, passoword):
                 self.user = self.database_users.find_user(login, passoword)
                 self.restart_surface('menu')
-
 
     def log_up(self, login, passoword):
         if len(login) > 3 and len(passoword) > 3 and len(login) < 25:

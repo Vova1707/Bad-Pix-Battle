@@ -2,6 +2,7 @@ import socket
 import json
 from threading import Thread
 
+
 class Client:
 
     def __init__(self, addr):
@@ -11,7 +12,7 @@ class Client:
         self.drawing = {'pos_player': 0}
         self.pos_cell_x = 0
         self.pos_cell_y = 0
-        self.pos =(0, 0)
+        self.pos = (0, 0)
         self.player = {
             # Движение
             'id': 0,
@@ -56,11 +57,9 @@ class Client:
         self.sock.sendall(bytes(json.dumps({'request': 'block',
                                             'pos': pos}), 'UTF-8'))
 
-
     def update_index(self, index):
         self.sock.sendall(bytes(json.dumps({'request': 'update_index',
                                             "index": index}), 'UTF-8'))
-
 
     def get_cell(self, pos):
         self.sock.sendall(bytes(json.dumps({'request': 'get_cell',

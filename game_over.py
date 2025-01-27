@@ -1,5 +1,3 @@
-import pygame
-
 class Game_Over:
     def __init__(self, parent):
         self.parent = parent
@@ -9,5 +7,5 @@ class Game_Over:
                                   lambda: self.parent.restart_surface('menu'))
 
     def listen(self):
-            self.parent.screen.fill((200, 100, 50))
-            self.parent.create_text('Вы проиграли', 24, (400, 400), (0, 0, 0), (200, 100, 50))
+        self.parent.screen.fill((200, 100, 50))
+        self.parent.create_text('Вы проиграли', 24, (400, 400), (0, 0, 0), (200, 100, 50))

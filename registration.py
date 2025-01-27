@@ -18,7 +18,6 @@ class Registration:
                                   lambda: self.parent.log_up(''.join(self.parent.widgets[0].text),
                                                              ''.join(self.parent.widgets[1].text)))
 
-
     def listen(self):
         self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game_Menu.jpg"),
                                                        (1600, 1000)), (0, 0))
