@@ -18,7 +18,7 @@ from game_ofline import Game_Offline, Menu_Game_Offline, Game_Win_Offline, Game_
 
 pygame.init()
 WINDOW_WEIGHT, WINDOW_HEIGHT = 1600, 1000
-HOST, PORT = "localhost", 12200
+HOST, PORT = "localhost", 12222
 
 
 class Main_Window:
@@ -46,17 +46,25 @@ class Main_Window:
         self.user = None
 
         self.view_logo()
-        pygame.mixer.music.load('music/music.mp3')
-        pygame.mixer.music.play()
         self.listen_all()
 
     def view_logo(self):
+        icon = pygame.transform.scale(pygame.image.load(f"Images/Fon/heart.png"), (32, 32))
+        pygame.display.set_icon(icon)
+        pygame.mixer.music.load('music/music.mp3')
+        pygame.mixer.music.play()
+        pygame.mixer.music.set_volume(1)
+        self.act_game_onl = False
         logo = pygame.transform.scale(pygame.image.load(f"Images/Fon/Main_Menu.jpg"),
                                                        (1600, 1000))
         self.screen.fill((255, 255, 255))
         self.screen.blit(logo, (0, 0))
+        self.create_text(f'B', 150, (300, 270), (255, 0, 0), (200, 100, 50))
+        self.create_text(f'P', 150, (570, 270), (0, 255, 0), (200, 100, 50))
+        self.create_text(f'B', 150, (800, 270), (255, 255, 50), (200, 100, 50))
+        self.create_text(f'ad  ix  attle', 120, (400, 300), (20, 10, 50), (200, 100, 50))
         pygame.display.flip()
-        pygame.time.wait(2000)
+        pygame.time.wait(3000)
 
     def listen_all(self):
         self.list_active_surface = {'menu': Menu(self),
@@ -82,13 +90,12 @@ class Main_Window:
         self.options_window_widget = np.array([])
         self.update_window = True
         self.user = ('id', 'имя', 'логин', 'пароль', 0, 0, 0)
-        pygame.mixer.music.pause()
         while self.RUN:
-            self.screen.fill((255, 0, 0))
             events = pygame.event.get()
             if self.update_window:
                 self.list_active_surface[self.active_surface].create_widgets()
                 self.update_window = False
+                self.screen.fill((0, 0, 0))
             self.list_active_surface[self.active_surface].listen()
             for event in events:
                 if event.type == pygame.QUIT:
@@ -101,23 +108,27 @@ class Main_Window:
 
 
 
-    def restart_surface(self, name):
+    def restart_surface(self, name, no_button=False):
         del self.widgets
         self.widgets = np.array([])
+        if not no_button:
+            hit = pygame.mixer.Sound('music/button.mp3')
+            hit.set_volume(0.5)
+            hit.play()
         self.active_surface = name
         self.update_window = True
 
 
 
     def log_in(self, login, passoword):
-        if len(login) > 3 and len(passoword) > 3 and len(login) < 15:
+        if len(login) > 3 and len(passoword) > 3 and len(login) < 25:
             if self.database_users.add_user("Новый пользователь", login, passoword):
                 self.user = self.database_users.find_user(login, passoword)
                 self.restart_surface('menu')
 
 
     def log_up(self, login, passoword):
-        if len(login) > 3 and len(passoword) > 3 and len(login) < 15:
+        if len(login) > 3 and len(passoword) > 3 and len(login) < 25:
             self.user = self.database_users.find_user(login, passoword)
             if self.user:
                 self.restart_surface('menu')

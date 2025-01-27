@@ -34,7 +34,7 @@ obj_for_kart = {1: {'object': [{'img': 'генератор.jpg', 'pos': (1200, 6
                                {'img': 'портал.png', 'pos': (3000, 440), 'size': (200, 250), 'funct': 'portal'},
                                {'img': '1.png', 'pos': (600, 550), 'size': (40, 80), 'funct': 'medal'}],
                     'enemy': [],
-                    'task': {}},
+                    'task': {'block': 3}},
 
                 2: {'object': [{'img': 'генератор.jpg', 'pos': (200, 620), 'size': (100, 100),
                                 'funct': 'generate_breaking_block'},
@@ -151,6 +151,9 @@ class Board:
             i, j = cell
             if func == 'add':
                 if self.board_kart[i][j] == 0 and len(player.player['block']) > 0:
+                    # звук добавления блока
+                    hit = pygame.mixer.Sound('music/add_block.mp3')
+                    hit.play()
                     block = player.next_block()
                     self.desk[i][j].create_block(block, dict_cells_group[block])
                     self.board_kart[i][j] = -dict_cells_group[block]
@@ -194,6 +197,10 @@ class Block(pygame.sprite.Sprite):
     def break_block(self, score):
         if self.param['image'] != 'камень':
             self.param['forse'] -= score
+            # звук разбития блока
+            hit = pygame.mixer.Sound('music/delete_block.mp3')
+            hit.set_volume(0.5)
+            hit.play()
             if self.param['forse'] <= 0:
                 self.die = True
                 self.create_breaking_block()
@@ -217,7 +224,6 @@ class Block(pygame.sprite.Sprite):
 class Breaking_Block(pygame.sprite.Sprite):
     def __init__(self, pos, image=False):
         pygame.sprite.Sprite.__init__(self)
-
         self.group = breaking_block
         all_sprites.append(self)
         self.die = False
@@ -279,7 +285,6 @@ class Enemy(pygame.sprite.Sprite):
                 if abs(self.rect.x - self.player['main_player'].rect.x) <= 500 and abs(
                         self.rect.y - self.player['main_player'].rect.y) <= 200:
                     if datetime.datetime.now().time().second - self.time.second >= 1:
-                        print(1)
                         self.shoot((self.player['main_player'].rect.y, self.player['main_player'].rect.x))
                         self.time = datetime.datetime.now().time()
             self.check_kill()
@@ -290,6 +295,9 @@ class Enemy(pygame.sprite.Sprite):
             self.player['heart'] = 0
         if self.player['heart'] <= 0:
             self.die = True
+            # звук смерти врага
+            hit = pygame.mixer.Sound('music/die_enemy.mp3')
+            hit.play()
             player = list(filter(lambda player: isinstance(player, Player), players))[0]
             player.player['score'] += 1
             player.update_task('enemy')
@@ -305,6 +313,9 @@ class Enemy(pygame.sprite.Sprite):
                     napravlenie = -1
                 else:
                     napravlenie = 1
+                # звук выстрела
+                hit = pygame.mixer.Sound('music/shoot.mp3')
+                hit.play()
                 Shell(self, k, b, napravlenie, shell, dict_shell_group[shell][0], dict_shell_group[shell][1])
 
     def move(self, x, y):
@@ -368,6 +379,9 @@ class Player(pygame.sprite.Sprite):
 
     def add_obj(self, group, obj):
         self.player[group] = self.player[group] + [obj]
+        # звук добавления предмета в инвентарь
+        hit = pygame.mixer.Sound('music/add_breaking.wav')
+        hit.play()
 
     def update_task(self, key):
         if key in self.player['task'].keys():
@@ -376,6 +390,9 @@ class Player(pygame.sprite.Sprite):
 
     def choice_inventory(self):
         index = self.player['inventory_index']
+        # звук поедания яблока
+        hit = pygame.mixer.Sound('music/eat_apple.wav')
+        hit.play()
         inventory = self.player['inventory']
         if index < len(inventory):
             if inventory[index] == 'Золотое_Яблоко.png':
@@ -451,9 +468,7 @@ class Player(pygame.sprite.Sprite):
         self.player['inventory_index'] = 0 if self.player['inventory_index'] > 3 else 3 if (
                 self.player['inventory_index'] < 0) else self.player['inventory_index']
 
-
     def shoot(self, pos):
-        print(pos)
         shell = self.next_shell()
         if shell:
             k = (self.rect.y - pos[0]) / (self.rect.x - pos[1])
@@ -462,6 +477,9 @@ class Player(pygame.sprite.Sprite):
                 napravlenie = -1
             else:
                 napravlenie = 1
+            # звук выстрела
+            hit = pygame.mixer.Sound('music/shoot.mp3')
+            hit.play()
             Shell(self, k, b, napravlenie, shell, dict_shell_group[shell][0], dict_shell_group[shell][1])
 
 
@@ -568,6 +586,9 @@ class Object(pygame.sprite.Sprite):
             self.start = 1
         else:
             if datetime.datetime.now().time().second - self.time.second >= 3:
+                # звук подбора
+                hit = pygame.mixer.Sound('music/add_breaking.wav')
+                hit.play()
                 Breaking_Block((self.rect.x + self.rect.w // 2, self.rect.y - 50), 'дерево')
                 self.time = datetime.datetime.now().time()
 
@@ -578,6 +599,9 @@ class Object(pygame.sprite.Sprite):
             self.start = 1
         else:
             if datetime.datetime.now().time().second - self.time.second >= 3:
+                # звук подбора
+                hit = pygame.mixer.Sound('music/add_breaking.wav')
+                hit.play()
                 Breaking_Shell((self.rect.x + self.rect.w // 2, self.rect.y - 50), 'шар')
                 self.time = datetime.datetime.now().time()
 
@@ -614,13 +638,18 @@ class Object(pygame.sprite.Sprite):
         player = list(filter(lambda player: self.rect.colliderect(player.rect) and isinstance(player, Player)
                                             and player.rect.x - self.rect.x > 50, players))
         if player:
+            print(1)
             if not list(filter(lambda task: task, player[0].player['task'].values())): player[0].player['win'] = True
 
     def medal(self):
         player = list(filter(lambda player: self.rect.colliderect(player.rect) and
                                             isinstance(player, Player), players))
         if player:
-            player[0].player['medal'] = self.img_path
+            if not self.die:
+                # звук медали
+                hit = pygame.mixer.Sound('music/add_medal.mp3')
+                hit.play()
+                player[0].player['medal'] = self.img_path
             self.die = True
 
 
@@ -776,11 +805,16 @@ class Game_Offline:
                 self.board.game_screen.blit(obj.image, obj.rect)
 
         if self.main_player.player['heart'] <= 0:
+            # звук поражения
+            hit = pygame.mixer.Sound('music/die_player.mp3')
+            hit.play()
             self.close_game('game_lose_offline')
         if self.main_player.player['win']:
+            # звук победы
+
+            hit = pygame.mixer.Sound('music/next_level.mp3')
+            hit.play()
             self.close_game('game_win_offline')
-
-
 
         if (self.board.pos_cell_x and self.board.pos_cell_y and
                 abs(self.main_player.rect.x - self.board.pos_cell_x * 40) < 200 and
@@ -870,11 +904,15 @@ class Game_Lose_Offline:
     def create_widgets(self):
         self.parent.create_button((650, 400),
                                   (300, 150), 'Выход', 0, lambda: self.parent.restart_surface('game_offline'))
+        self.screen_now = pygame.Surface((1600, 1000))
+        self.screen_now.blit(self.parent.screen, (0, 0))
+        red = pygame.Surface((1600, 1000))
+        red.fill((255, 0, 0))
+        red.set_alpha(200)
+        self.screen_now.blit(red, (0, 0))
 
     def listen(self):
-        self.parent.screen.blit(pygame.transform.scale(
-            pygame.image.load(f"Images/Fon/Game_Menu.jpg"), (1600, 1000)),
-                                (0, 0))
+        self.parent.screen.blit(self.screen_now, (0, 0))
         self.parent.create_text(f'Вы проиграли', 60, (500, 300), (0, 0, 0), (200, 100, 50))
 
     def listen_event(self, event):

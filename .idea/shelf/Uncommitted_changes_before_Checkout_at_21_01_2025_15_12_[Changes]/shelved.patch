@@ -1,0 +1,14 @@
+Index: requirements.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-16LE
+===================================================================
+diff --git a/requirements.txt b/requirements.txt
+deleted file mode 100644
+--- a/requirements.txt	(revision 954826a584d0c3733c92c6a797de940dbb51e377)
++++ /dev/null	(revision 954826a584d0c3733c92c6a797de940dbb51e377)
+@@ -1,4 +0,0 @@
+-asgiref==3.8.1
+-numpy==2.2.0
+-pygame==2.6.1
+-pygame-widgets==1.1.5

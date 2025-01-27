@@ -2,12 +2,16 @@ import socket
 from threading import Thread
 import json
 
-from game_ofline import Board, Player, Object, check_delete, obj_for_kart, players
+from game_ofline import Board, Player, Object, check_delete, players
 from game_ofline import all_sprites, groups
 
-HOST, PORT = 'localhost', 12220
+HOST, PORT = 'localhost', 12222
 MAX_PLAYERS = 4
-
+obj_for_kart = {1: {'object': [{'img': 'генератор.jpg', 'pos': (1200, 620), 'size': (100, 100),
+                                'funct': 'generate_breaking_block'},
+                               {'img': 'портал.png', 'pos': (3000, 440), 'size': (200, 250), 'funct': 'portal'}],
+                    'enemy': [],
+                    'task': {}}}
 
 
 class Server:
@@ -47,7 +51,6 @@ class Server:
                 if data['request'] == 'get_all':
                     self.get_all(conn)
                 if data["request"] == 'move':
-                    print('move')
                     self.main_player.moving_player(data['napravlenie'], data['znachenie'])
                 elif data["request"] == 'shoot':
                     self.main_player.shoot(data['pos'])
@@ -58,7 +61,6 @@ class Server:
                 elif data["request"] == 'get_cell':
                     self.board.get_cell(data["pos"], self.main_player)
                     self.pos = self.board.celling(data["pos"], self.main_player)
-                    print(data["pos"], 111)
                 elif data["request"] == 'click':
                     self.board.click(data['pos'], data['funct'], self.main_player)
                 elif data["request"] == 'shoot':

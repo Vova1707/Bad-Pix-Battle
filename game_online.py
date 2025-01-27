@@ -2,7 +2,7 @@ import pygame
 from client import Client
 
 
-HOST, PORT = "localhost", 12220  # Для сервера в дальнельшей перспективе будет развитие до настоящего сервера
+HOST, PORT = "localhost", 12222  # Для сервера в дальнельшей перспективе будет развитие до настоящего сервера
 # Начальные группы спрайтов
 all_sprites = []
 base_cells = []
@@ -42,7 +42,7 @@ class Game:
 
     def create_widgets(self):
         self.client = Client((HOST, PORT))
-        self.parent.create_button((1400, 0), (200, 80), 'Выйти', 0, lambda: self.close_game('game_online'))
+        self.parent.create_button((1400, 0), (200, 80), 'Выйти', 0, lambda: self.close_game('game_online_menu'))
 
     def listen_event(self, event):
         if event.type == pygame.MOUSEMOTION:
@@ -135,6 +135,8 @@ class Menu_Game_Online:
         self.parent = parent
 
     def create_widgets(self):
+        all_sprites.clear()
+        groups.clear()
         self.parent.create_textbox((500, 300), (600, 100))
         self.parent.create_button((600, 450), (400, 100), 'Зайти в игру', 0, lambda:
         self.check_text(''.join(self.parent.widgets[0].text)))
@@ -151,7 +153,8 @@ class Menu_Game_Online:
         pass
 
     def check_text(self, text):
-        if text == '12345':
+        if text == '12345' and not self.parent.act_game_onl:
+            self.parent.act_game_onl = True
             self.parent.restart_surface('game_online')
 
 class Game_Lose_Online:
@@ -161,11 +164,15 @@ class Game_Lose_Online:
     def create_widgets(self):
         self.parent.create_button((650, 400), (300, 150), 'Выход', 0,
                                   lambda: self.parent.restart_surface('game_online_menu'))
+        self.screen_now = pygame.Surface((1600, 1000))
+        self.screen_now.blit(self.parent.screen, (0, 0))
+        red = pygame.Surface((1600, 1000))
+        red.fill((255, 0, 0))
+        red.set_alpha(200)
+        self.screen_now.blit(red, (0, 0))
 
     def listen(self):
-        self.parent.screen.blit(pygame.transform.scale(pygame.image.load(f"Images/Fon/Game_Menu.jpg"),
-                                                       (1600, 1000)),
-                                (0, 0))
+        self.parent.screen.blit(self.screen_now, (0, 0))
         self.parent.create_text(f'Вы проиграли', 60, (500, 300), (0, 0, 0), (200, 100, 50))
 
     def listen_event(self, event):
