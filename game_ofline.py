@@ -694,8 +694,6 @@ class Game_Offline:
         self.board = Board(self.main_player, self.kart)
         self.parent.create_button((1400, 0), (200, 80), 'Выйти', 0, lambda: self.close_game('game_offline'))
         self.game_screen = self.board.game_screen
-        for i in all_sprites:
-            print(i.__class__.__name__)
         self.create_other_obj()
 
     def create_other_obj(self):
