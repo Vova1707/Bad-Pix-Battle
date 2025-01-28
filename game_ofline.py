@@ -622,7 +622,6 @@ class Object(pygame.sprite.Sprite):
                              self.rect.colliderect(player.rect) and isinstance(player, Player)
                              and player.rect.x - self.rect.x > 50, players))
         if player:
-            print(1)
             if not list(filter(lambda task: task, player[0].player['task'].values())): player[0].player['win'] = True
 
     def medal(self):
